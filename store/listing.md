@@ -1,7 +1,6 @@
 # Skipper Flow — тексты для Chrome Web Store
 
 Всё, что нужно скопировать в панель разработчика (https://chrome.google.com/webstore/devconsole).
-Места, которые нужно дописать после выбора хостинга, помечены **[TODO]**.
 
 ---
 
@@ -87,7 +86,7 @@ Skipper Flow делает просмотр YouTube чище: пропускае�
 
 **Контактная почта издателя** (Account → Contact email, будет видна в магазине): skipperflow.help@gmail.com
 
-**Privacy policy URL:** **[TODO]** — ссылка вида `https://<логин>.github.io/<репозиторий>/privacy.html` (файл `docs/privacy.md`, публикуется через GitHub Pages).
+**Privacy policy URL:** https://bellka555.github.io/skipper-flow/privacy.html (файл `docs/privacy.md`, публикуется через GitHub Pages).
 
 ---
 
@@ -105,7 +104,7 @@ Skipper Flow делает просмотр YouTube чище: пропускае�
 
 - [x] Сервер в интернете (https://skipper-flow-api.bellka.workers.dev), адрес вписан в `extension/common/settings.js` и `manifest.json`
 - [x] Из `host_permissions` убраны `http://localhost/*` и `http://127.0.0.1/*`
-- [ ] Политика конфиденциальности опубликована по ссылке **[TODO]**
+- [x] Политика конфиденциальности опубликована: https://bellka555.github.io/skipper-flow/privacy.html
 - [ ] Собран архив: `pack-extension.ps1` → `dist/skipper-flow-1.0.0.zip`
 - [ ] Аккаунт разработчика Chrome Web Store (разовый взнос $5)
 - [ ] Расширение проверено на чистом профиле Chrome (без старых настроек)
