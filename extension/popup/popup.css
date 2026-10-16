@@ -329,3 +329,8 @@ body.preload .slider,
 body.preload .slider::after {
   transition: none !important;
 }
+
+/* Длинное название «Режим стримера / Фильтрация мата» — чуть плотнее буквы, чтобы влезло в одну строку */
+.streamer .card-head h2 {
+  letter-spacing: 0.03em;
+}

@@ -27,7 +27,7 @@
     "message": "Subscribe reminders"
   },
   "streamerMode": {
-    "message": "Streamer mode"
+    "message": "Streamer mode / Profanity filter"
   },
   "slurs": {
     "message": "Slurs"
@@ -237,7 +237,7 @@
     "message": "Model"
   },
   "modelHint": {
-    "message": "Model ID from openrouter.ai/models. Empty — default models."
+    "message": "Model ID from openrouter.ai/models — Claude, GPT, Gemini and many others are available there with one key. Pick one from the list or type your own. Empty — default (free) models."
   },
   "serverTitle": {
     "message": "Server"

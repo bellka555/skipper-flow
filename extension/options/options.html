@@ -115,10 +115,17 @@
         <div class="field">
           <label for="model" data-i18n="modelLabel"></label>
           <input type="text" id="model" list="model-list" placeholder="nvidia/nemotron-3-super-120b-a12b:free" />
+          <!-- Подсказки для поля «Модель». Через OpenRouter одним ключом доступны модели разных компаний.
+               ID сверены со списком openrouter.ai/models (октябрь 2026). label — что видно в выпадающем списке. -->
           <datalist id="model-list">
-            <option value="nvidia/nemotron-3-super-120b-a12b:free"></option>
-            <option value="nvidia/nemotron-3-super-120b-a12b"></option>
-            <option value="google/gemma-4-31b-it:free"></option>
+            <option value="nvidia/nemotron-3-super-120b-a12b:free" label="Nemotron 3 Super (free)"></option>
+            <option value="nvidia/nemotron-3-super-120b-a12b" label="Nemotron 3 Super"></option>
+            <option value="anthropic/claude-haiku-5.5" label="Claude Haiku 5.5"></option>
+            <option value="anthropic/claude-sonnet-5.5" label="Claude Sonnet 5.5"></option>
+            <option value="openai/gpt-6-luna-pro" label="GPT-6 Luna Pro"></option>
+            <option value="openai/gpt-6.1-sol" label="GPT-6.1 Sol"></option>
+            <option value="google/gemini-3.8-flash" label="Gemini 3.8 Flash"></option>
+            <option value="google/gemma-4-31b-it:free" label="Gemma 4 31B (free)"></option>
           </datalist>
           <p class="hint" data-i18n="modelHint"></p>
         </div>

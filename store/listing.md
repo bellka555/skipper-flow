@@ -27,7 +27,7 @@ Skipper Flow makes watching YouTube cleaner: it skips creators' sponsor segments
 • Colored marks on the video timeline, plus "Watch the ad" and "Not an ad" buttons.
 • Each type can be turned off separately.
 
-🎙 STREAMER MODE
+🎙 STREAMER MODE / PROFANITY FILTER
 • Bleeps or mutes slurs and profanity in videos — for example, when you react to videos live.
 • Warns you a few seconds before a forbidden word.
 • Dictionaries for English, Russian and Ukrainian + your own words.
@@ -70,7 +70,7 @@ Skipper Flow делает просмотр YouTube чище: пропускае�
 • Цветные метки на шкале видео, кнопка «Посмотреть рекламу» и «Это не реклама».
 • Каждый тип можно выключить отдельно.
 
-🎙 РЕЖИМ СТРИМЕРА
+🎙 РЕЖИМ СТРИМЕРА / ФИЛЬТРАЦИЯ МАТА
 • Запикивает или глушит оскорбления и мат в видео — например, когда вы реагируете на ролики в эфире.
 • Предупреждает за несколько секунд до запрещённого слова.
 • Словари на русском, украинском и английском + свои слова.
@@ -113,7 +113,7 @@ Skipper Flow робить перегляд YouTube чистішим: пропу�
 • Кольорові мітки на шкалі відео, кнопки «Переглянути рекламу» і «Це не реклама».
 • Кожен тип можна вимкнути окремо.
 
-🎙 РЕЖИМ СТРИМЕРА
+🎙 РЕЖИМ СТРИМЕРА / ФІЛЬТРАЦІЯ МАТУ
 • Запікує або глушить образи й мат у відео — наприклад, коли ви реагуєте на ролики в ефірі.
 • Попереджає за кілька секунд до забороненого слова.
 • Словники українською, англійською й російською + власні слова.

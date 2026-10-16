@@ -13,7 +13,7 @@
 - First it checks the open [SponsorBlock](https://sponsor.ajay.app/) database. If there's nothing there, an AI finds the segments from the video's subtitles. This covers Russian-speaking and smaller channels that SponsorBlock rarely marks up.
 - Colored marks on the video timeline, plus a notification with "Watch the ad" and "Not an ad" buttons (feedback goes to the server).
 
-### 🎙 Streamer mode
+### 🎙 Streamer mode / Profanity filter
 - Bleeps or mutes slurs and profanity — for example, when a streamer reacts to other people's videos live.
 - Warns a few seconds before a forbidden word.
 - Dictionaries for English, Russian and Ukrainian, prefix-aware matching for Slavic profanity, plus your own words.

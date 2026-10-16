@@ -27,7 +27,7 @@
     "message": "Прохання підписатися"
   },
   "streamerMode": {
-    "message": "Режим стримера"
+    "message": "Режим стримера / Фільтрація мату"
   },
   "slurs": {
     "message": "Образи"
@@ -237,7 +237,7 @@
     "message": "Модель"
   },
   "modelHint": {
-    "message": "ID моделі з openrouter.ai/models. Порожньо — моделі за замовчуванням."
+    "message": "ID моделі з openrouter.ai/models — там одним ключем доступні Claude, GPT, Gemini та багато інших. Оберіть зі списку або впишіть свою. Порожньо — моделі за замовчуванням (безкоштовні)."
   },
   "serverTitle": {
     "message": "Сервер"
