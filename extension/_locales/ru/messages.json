@@ -204,10 +204,10 @@
     "message": "Главное"
   },
   "playerButtonOn": {
-    "message": "Skipper Flow: пропуск рекламы включён (нажмите, чтобы выключить)"
+    "message": "Skipper Flow включён (нажмите, чтобы выключить всё)"
   },
   "playerButtonOff": {
-    "message": "Skipper Flow: пропуск рекламы выключен (нажмите, чтобы включить)"
+    "message": "Skipper Flow выключен (нажмите, чтобы включить снова)"
   },
   "errServerUnavailable": {
     "message": "сервер $1 недоступен"

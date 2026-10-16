@@ -98,7 +98,7 @@ function createSkipperIcon() {
 }
 
 // Создаёт кнопку со значком справа в панели плеера (если её ещё нет) и обновляет её вид.
-// enabled — включён ли пропуск, onToggle — что делать при клике.
+// enabled — работает ли хоть что-то (пропуск рекламы или режим стримера), onToggle — что делать при клике.
 function renderPlayerButton(enabled, onToggle) {
   const controls = document.querySelector('#movie_player .ytp-right-controls');
   if (!controls) return; // плеер ещё не загрузился

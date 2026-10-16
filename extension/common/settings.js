@@ -14,6 +14,8 @@ const DEFAULT_SETTINGS = {
   model: '', // модель для своего ключа (если пустая — модели по умолчанию)
   backendUrl: 'https://skipper-flow-api.bellka.workers.dev', // наш сервер на Cloudflare (для локальной разработки — см. README)
   cleanMode: false, // «Чистый режим»: всё работает, но без цветных меток на шкале видео
+  // Что было включено до нажатия общей кнопки в плеере (чтобы вернуть как было): { enabled, streamer }
+  resumeState: null,
   // Режим стримера: заглушение запрещённых слов (см. content/streamer.js)
   streamer: {
     enabled: false, // выключен, пока пользователь сам не включит

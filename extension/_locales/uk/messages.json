@@ -1,0 +1,284 @@
+{
+  "extName": {
+    "message": "Skipper Flow — пропуск реклами на YouTube"
+  },
+  "extDescription": {
+    "message": "Пропускає рекламні вставки у відео YouTube, запікує мат і образи для стримерів, показує головне у відео."
+  },
+  "masterAria": {
+    "message": "Пропуск реклами"
+  },
+  "masterOn": {
+    "message": "Пропуск реклами увімкнено"
+  },
+  "masterOff": {
+    "message": "Пропуск реклами вимкнено"
+  },
+  "whatToSkip": {
+    "message": "Що пропускати"
+  },
+  "typeSponsor": {
+    "message": "Реклама спонсорів"
+  },
+  "typeSelfpromo": {
+    "message": "Самореклама"
+  },
+  "typeInteraction": {
+    "message": "Прохання підписатися"
+  },
+  "streamerMode": {
+    "message": "Режим стримера"
+  },
+  "slurs": {
+    "message": "Образи"
+  },
+  "slursNote": {
+    "message": "(так-так, це саме те, що вам потрібно, особливо стримерам)"
+  },
+  "profanity": {
+    "message": "Мат"
+  },
+  "beep": {
+    "message": "«Біп» замість тиші"
+  },
+  "warnAhead": {
+    "message": "Попереджати заздалегідь"
+  },
+  "warnAheadNote": {
+    "message": "(працює для двох функцій: мат і образи)"
+  },
+  "streamerHint": {
+    "message": "Працює за субтитрами — допомагає, але не дає 100% гарантії."
+  },
+  "currentVideo": {
+    "message": "Поточне відео"
+  },
+  "loading": {
+    "message": "Завантаження…"
+  },
+  "openYoutube": {
+    "message": "Відкрийте відео на YouTube"
+  },
+  "sourceCache": {
+    "message": "Кеш"
+  },
+  "sourceAi": {
+    "message": "ШІ"
+  },
+  "segSponsor": {
+    "message": "Реклама"
+  },
+  "segSelfpromo": {
+    "message": "Самореклама"
+  },
+  "segInteraction": {
+    "message": "Підписка / лайк"
+  },
+  "watchOnceTitle": {
+    "message": "Переглянути цей фрагмент один раз"
+  },
+  "skipAgain": {
+    "message": "Пропускати"
+  },
+  "skipAgainTitle": {
+    "message": "Знову вважати рекламою й пропускати"
+  },
+  "notAdShort": {
+    "message": "Не реклама"
+  },
+  "notAdTitle": {
+    "message": "Більше не пропускати й надіслати відгук"
+  },
+  "highlightsTitle": {
+    "message": "Головне у відео"
+  },
+  "findHighlights": {
+    "message": "Знайти головне"
+  },
+  "searching": {
+    "message": "Шукаю…"
+  },
+  "aiHighlightsHead": {
+    "message": "Головне на думку ШІ"
+  },
+  "chaptersAuthor": {
+    "message": "Розділи від автора"
+  },
+  "chaptersAuto": {
+    "message": "Розділи (створені YouTube)"
+  },
+  "goToMoment": {
+    "message": "Перейти до цього моменту"
+  },
+  "cleanMode": {
+    "message": "Чистий режим"
+  },
+  "cleanModeNote": {
+    "message": "(усе працює, але на шкалі відео немає кольорових міток)"
+  },
+  "settingsLink": {
+    "message": "Налаштування"
+  },
+  "statusShortsOnly": {
+    "message": "У Shorts працює лише режим стримера"
+  },
+  "statusSponsorBlock": {
+    "message": "Шукаю розмітку в SponsorBlock…"
+  },
+  "statusWaitingSubs": {
+    "message": "Чекаю на субтитри…"
+  },
+  "statusUnavailable": {
+    "message": "Для цього відео аналіз недоступний"
+  },
+  "toastUnavailable": {
+    "message": "Skipper Flow: для цього відео аналіз недоступний"
+  },
+  "statusAnalyzing": {
+    "message": "ШІ аналізує субтитри…"
+  },
+  "statusAnalysisError": {
+    "message": "Помилка аналізу: $1"
+  },
+  "segmentsFound": {
+    "message": "Знайдено сегментів: $1"
+  },
+  "noAdsFound": {
+    "message": "Реклами не знайдено"
+  },
+  "wordsNoSubs": {
+    "message": "Немає субтитрів — перевірити слова неможливо"
+  },
+  "wordsFound": {
+    "message": "Буде заглушено місць: $1"
+  },
+  "wordsNone": {
+    "message": "Заборонених слів не знайдено"
+  },
+  "highlightsNoSubs": {
+    "message": "Немає субтитрів — знайти головне неможливо"
+  },
+  "highlightsSearching": {
+    "message": "ШІ шукає головне…"
+  },
+  "highlightsNone": {
+    "message": "Ключових моментів не знайдено"
+  },
+  "errorPrefix": {
+    "message": "Помилка: $1"
+  },
+  "emptyBackgroundResponse": {
+    "message": "Порожня відповідь від фонової частини розширення"
+  },
+  "toastSkipped": {
+    "message": "Пропущено"
+  },
+  "watchAd": {
+    "message": "Переглянути рекламу"
+  },
+  "notAnAd": {
+    "message": "Це не реклама"
+  },
+  "wordWarning": {
+    "message": "Заборонене слово через $1 с"
+  },
+  "nameSponsor": {
+    "message": "Реклама"
+  },
+  "nameSelfpromo": {
+    "message": "Самореклама"
+  },
+  "nameInteraction": {
+    "message": "Прохання підписатися"
+  },
+  "nameSlurs": {
+    "message": "Образа"
+  },
+  "nameProfanity": {
+    "message": "Мат"
+  },
+  "nameCustom": {
+    "message": "Своє слово"
+  },
+  "nameHighlight": {
+    "message": "Головне"
+  },
+  "playerButtonOn": {
+    "message": "Skipper Flow увімкнено (натисніть, щоб вимкнути все)"
+  },
+  "playerButtonOff": {
+    "message": "Skipper Flow вимкнено (натисніть, щоб увімкнути знову)"
+  },
+  "errServerUnavailable": {
+    "message": "сервер $1 недоступний"
+  },
+  "errAllModelsFailed": {
+    "message": "усі моделі повернули помилку ($1)"
+  },
+  "optionsTitle": {
+    "message": "Skipper Flow — налаштування"
+  },
+  "optionsHeading": {
+    "message": "Налаштування"
+  },
+  "optionsLead": {
+    "message": "Skipper Flow — пропуск реклами на YouTube"
+  },
+  "ownKeyTitle": {
+    "message": "Власний ключ OpenRouter"
+  },
+  "apiKeyLabel": {
+    "message": "API-ключ (необов’язково)"
+  },
+  "apiKeyHint": {
+    "message": "Якщо ключ указано, розширення звертається до OpenRouter напряму й не використовує наш сервер. Ключ зберігається лише в цьому браузері й нікуди, крім OpenRouter, не надсилається."
+  },
+  "modelLabel": {
+    "message": "Модель"
+  },
+  "modelHint": {
+    "message": "ID моделі з openrouter.ai/models. Порожньо — моделі за замовчуванням."
+  },
+  "serverTitle": {
+    "message": "Сервер"
+  },
+  "backendLabel": {
+    "message": "Адреса нашого сервера"
+  },
+  "backendHint": {
+    "message": "Використовується, коли власний ключ не вказано, і для відгуків «Це не реклама»."
+  },
+  "customWordsLabel": {
+    "message": "Власні слова для заглушення"
+  },
+  "customWordsPlaceholder": {
+    "message": "наприклад: петрик, петрика, слово*"
+  },
+  "customWordsHint": {
+    "message": "Через кому або з нового рядка. Зірочка в кінці — будь-яке закінчення: «петрик*» заглушить «петрик», «петрика», «петрику». Обережно з короткими основами: «ні*» заглушить і «ніхто», і «ніколи». Лише окремі слова, не фрази. Працює разом із вбудованим словником (англійська, російська, українська)."
+  },
+  "save": {
+    "message": "Зберегти"
+  },
+  "clearKey": {
+    "message": "Видалити ключ"
+  },
+  "clearCache": {
+    "message": "Очистити кеш аналізу"
+  },
+  "saved": {
+    "message": "Збережено"
+  },
+  "keyDeleted": {
+    "message": "Ключ видалено"
+  },
+  "cacheCleared": {
+    "message": "Кеш очищено: $1"
+  },
+  "creditsBefore": {
+    "message": "Розмітка сегментів частково береться з"
+  },
+  "creditsLicense": {
+    "message": "ліцензія"
+  }
+}

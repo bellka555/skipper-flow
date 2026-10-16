@@ -27,7 +27,7 @@
 
 ![Video highlights](store/images/en/screenshot-3-highlights.png)
 
-The interface is available in English and Russian (chosen automatically by the browser language).
+The interface is available in English, Russian and Ukrainian (chosen automatically by the browser language).
 
 ## How it works
 
@@ -67,9 +67,9 @@ Interesting bits of the code:
 ## Project structure
 
 ```
-extension/   — the Chrome extension (_locales/ holds the English and Russian texts)
+extension/   — the Chrome extension (_locales/ holds the English, Russian and Ukrainian texts)
 backend/     — the server on Cloudflare Workers + D1 database
-store/       — Chrome Web Store texts and images (en / ru)
+store/       — Chrome Web Store texts and images (en / ru / uk)
 docs/        — GitHub Pages site (privacy policy)
 ```
 

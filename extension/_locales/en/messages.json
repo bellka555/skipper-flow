@@ -204,10 +204,10 @@
     "message": "Highlight"
   },
   "playerButtonOn": {
-    "message": "Skipper Flow: ad skipping is on (click to turn off)"
+    "message": "Skipper Flow is on (click to turn everything off)"
   },
   "playerButtonOff": {
-    "message": "Skipper Flow: ad skipping is off (click to turn on)"
+    "message": "Skipper Flow is off (click to turn it back on)"
   },
   "errServerUnavailable": {
     "message": "server $1 is unavailable"

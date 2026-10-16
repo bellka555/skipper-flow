@@ -127,14 +127,31 @@ document.addEventListener('yt-navigate-finish', checkVideoChange);
 setInterval(() => {
   checkVideoChange();
   attachToVideo();
-  renderPlayerButton(settings.enabled, toggleEnabled);
+  renderPlayerButton(isAnythingOn(), toggleEverything);
 }, 1000);
 
-// Кнопка в плеере: включить/выключить весь пропуск рекламы.
-// Сохраняем в chrome.storage — дальше сработает chrome.storage.onChanged (ниже),
-// и все части расширения (включая popup) узнают о новом значении.
-function toggleEnabled() {
-  saveSettings({ enabled: !settings.enabled });
+// Кнопка в плеере — общий выключатель: выключает ВСЁ (пропуск рекламы и режим стримера),
+// а повторное нажатие возвращает ровно то, что было включено до этого.
+// (Переключатели в popup по-прежнему управляют функциями по отдельности.)
+function isAnythingOn() {
+  return settings.enabled || settings.streamer.enabled;
+}
+
+function toggleEverything() {
+  if (isAnythingOn()) {
+    // Запоминаем, что было включено, и выключаем всё
+    saveSettings({
+      enabled: false,
+      streamer: { ...settings.streamer, enabled: false },
+      resumeState: { enabled: settings.enabled, streamer: settings.streamer.enabled },
+    });
+  } else {
+    // Возвращаем как было. Если запомненного нет — включаем пропуск рекламы.
+    const resume = settings.resumeState || { enabled: true, streamer: false };
+    saveSettings({ enabled: resume.enabled, streamer: { ...settings.streamer, enabled: resume.streamer } });
+  }
+  // Дальше сработает chrome.storage.onChanged (ниже): все части расширения, включая popup,
+  // узнают о новых настройках и применят их сразу.
 }
 
 // Режим стримера: проверяем слова каждые 50 мс (почему не timeupdate — см. streamer.js).
@@ -567,7 +584,7 @@ chrome.storage.onChanged.addListener(async (changes, areaName) => {
       updateWordRanges();
     }
   }
-  renderPlayerButton(settings.enabled, toggleEnabled);
+  renderPlayerButton(isAnythingOn(), toggleEverything);
   if (!settings.enabled) hideToast();
 
   // Пропуск рекламы включили на видео, которое ещё не анализировали — запускаем поиск рекламы.
