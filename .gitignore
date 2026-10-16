@@ -1,0 +1,22 @@
+# Зависимости
+node_modules/
+
+# Секреты — никогда не коммитим
+.env
+.dev.vars
+
+# Локальные данные wrangler (локальная база D1 и т.п.)
+.wrangler/
+
+# База данных SQLite (кэш и отзывы)
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Мусор
+.DS_Store
+Thumbs.db
+*.log
+
+# Собранные архивы расширения
+dist/

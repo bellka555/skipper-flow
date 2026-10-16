@@ -1,0 +1,6 @@
+# Секреты для локального запуска (npm.cmd run dev).
+# Скопируйте этот файл в .dev.vars и впишите свой ключ. Файл .dev.vars НЕ попадает в git.
+# В интернете тот же секрет задаётся командой:  npx wrangler secret put OPENROUTER_API_KEY
+
+# Ключ OpenRouter: https://openrouter.ai/keys
+OPENROUTER_API_KEY=sk-or-v1-...

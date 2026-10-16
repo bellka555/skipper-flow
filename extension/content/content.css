@@ -1,0 +1,151 @@
+/* Стили для элементов, которые расширение добавляет на страницу YouTube.
+   Все классы начинаются с "ais-" (от первого названия — AI Skipper), чтобы не пересекаться с классами YouTube.
+*/
+
+/* ---------- Цвета (тема «Графит», как в common/theme.css) ---------- */
+
+html {
+  --ais-glass: rgba(12, 12, 14, 0.62);
+  --ais-border: rgba(255, 255, 255, 0.14);
+  --ais-highlight: rgba(255, 255, 255, 0.2);
+  --ais-text: #f4f4f5;
+  --ais-button: rgba(255, 255, 255, 0.12);
+  --ais-button-hover: rgba(255, 255, 255, 0.22);
+  --ais-accent: linear-gradient(135deg, #e9e9ea, #ffffff);
+  --ais-accent-text: #111;
+  --ais-on: #ffffff;
+}
+
+/* ---------- Полоски на шкале прогресса ---------- */
+
+.ais-bar {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* полоски не должны мешать кликать по шкале */
+  z-index: 40;
+}
+
+.ais-bar-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  opacity: 0.9;
+}
+
+/* Запрещённое слово (режим стримера): короткая красная метка, не уже 3px */
+.ais-bar-word {
+  min-width: 3px;
+  opacity: 1;
+}
+
+/* ---------- Кнопка со значком в панели плеера ---------- */
+/* Значок рисуется цветом текста (currentColor): включено — белый, выключено — тусклый серый. */
+
+.ais-player-button {
+  /* значок 24×24 — ровно по центру кнопки, какого бы размера её ни сделал плеер */
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--ais-on) !important;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.ais-player-button.ais-off {
+  color: #9a9a9a !important;
+  opacity: 0.5;
+}
+
+/* ---------- Уведомление «Пропущено…» (жидкое стекло поверх видео) ---------- */
+
+.ais-toast {
+  position: absolute;
+  left: 16px;
+  bottom: 72px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ais-border);
+  background: var(--ais-glass);
+  /* размываем видео под уведомлением — это и даёт эффект стекла */
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 var(--ais-highlight),
+    0 12px 32px -10px rgba(0, 0, 0, 0.55);
+  color: var(--ais-text);
+  font: 500 14px/1.3 Roboto, Arial, sans-serif;
+  /* В покое уведомление полупрозрачное, чтобы не мешать смотреть видео */
+  opacity: 0.55;
+  transition: opacity 0.25s;
+  animation: ais-toast-in 0.35s cubic-bezier(0.2, 1.2, 0.4, 1);
+}
+
+/* Цветная точка типа сегмента перед словом «Пропущено» (цвет приходит из ui.js через --c) */
+.ais-toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 8px var(--c);
+  flex-shrink: 0;
+}
+
+/* Предупреждение режима стримера — сразу полностью видно, с красноватой рамкой */
+.ais-toast.ais-toast-warning {
+  opacity: 1;
+  /* цвет рамки задаёт streamer.js через --warn-c: красный (оскорбление) или оранжевый (мат);
+     color-mix смешивает его с прозрачностью, чтобы рамка была мягче */
+  border-color: color-mix(in srgb, var(--warn-c, #ff4d4f) 55%, transparent);
+  animation: none;
+}
+
+/* Навели мышку — становится полностью видимым */
+.ais-toast:hover {
+  opacity: 1;
+}
+
+
+@keyframes ais-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 0.55;
+    transform: none;
+  }
+}
+
+.ais-toast-button {
+  border: 1px solid var(--ais-border);
+  border-radius: 999px;
+  padding: 6px 13px;
+  background: var(--ais-button);
+  color: var(--ais-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.ais-toast-button:hover {
+  background: var(--ais-button-hover);
+}
+
+.ais-toast-button:active {
+  transform: scale(0.96);
+}
+
+/* Первая кнопка («Посмотреть рекламу») — главная, с цветом темы */
+.ais-toast-button:first-of-type {
+  border-color: transparent;
+  background: var(--ais-accent);
+  color: var(--ais-accent-text);
+}
+
+.ais-toast-button:first-of-type:hover {
+  filter: brightness(1.1);
+}

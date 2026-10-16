@@ -1,0 +1,32 @@
+<!-- Логотип Skipper Flow: двойной шеврон «перемотка вперёд» на графитовой плитке.
+     Задний шеврон серый, передний — белый с лёгким переходом в серый: получается движение вперёд.
+     Это исходник: из него сделаны icon16/32/48/128.png. Знак простой, поэтому одна версия
+     хорошо читается во всех размерах — от 16 до 128 пикселей. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <!-- Плитка: сверху светлее, снизу почти чёрная -->
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e2e33" />
+      <stop offset="1" stop-color="#0c0c0d" />
+    </linearGradient>
+    <!-- Мягкий светлый блик в левом верхнем углу — как на фоне popup -->
+    <radialGradient id="shine" cx="0.18" cy="0.08" r="0.85">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.24" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <!-- Цвет переднего шеврона: белый сверху, светло-серый снизу -->
+    <linearGradient id="mark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#b4b4bb" />
+    </linearGradient>
+  </defs>
+
+  <rect width="128" height="128" rx="30" fill="url(#tile)" />
+  <rect width="128" height="128" rx="30" fill="url(#shine)" />
+  <!-- тонкая светлая рамка, как у карточек в popup -->
+  <rect x="1" y="1" width="126" height="126" rx="29" fill="none" stroke="#ffffff" stroke-opacity="0.17" stroke-width="2" />
+
+  <!-- Задний (серый) и передний (белый) шевроны -->
+  <path d="M38 40 L62 64 L38 88" fill="none" stroke="#7c7c84" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M64 40 L88 64 L64 88" fill="none" stroke="url(#mark)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

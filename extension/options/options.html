@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skipper Flow — настройки</title>
+    <link rel="stylesheet" href="../common/theme.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        background-attachment: fixed;
+      }
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 48px 16px;
+      }
+      h1 {
+        margin: 0 0 4px;
+        font-size: 26px;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+      }
+      .lead {
+        margin: 0 0 24px;
+        color: var(--muted);
+      }
+      .card {
+        padding: 20px 22px;
+        margin-bottom: 14px;
+      }
+      .card h2 {
+        margin-bottom: 14px;
+      }
+      .field + .field {
+        margin-top: 18px;
+      }
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 550;
+      }
+      input[type='text'],
+      input[type='password'],
+      textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        background: var(--glass);
+        color: var(--text);
+        font: inherit;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      input::placeholder {
+        color: var(--muted);
+      }
+      textarea {
+        resize: vertical;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--accent);
+        background: var(--glass-strong);
+      }
+      .hint {
+        margin: 6px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+      .actions .btn {
+        padding: 9px 16px;
+        font-size: 13px;
+      }
+      .btn.primary {
+        border-color: transparent;
+        background: var(--switch-on);
+        color: #111;
+      }
+      .credits {
+        margin-top: 28px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .credits a {
+        color: var(--muted);
+      }
+      #saved {
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <h1>Настройки</h1>
+      <p class="lead">Skipper Flow — пропуск рекламы в YouTube</p>
+
+      <section class="glass card">
+        <h2>Свой ключ OpenRouter</h2>
+        <div class="field">
+          <label for="apiKey">API-ключ (необязательно)</label>
+          <input type="password" id="apiKey" placeholder="sk-or-v1-…" autocomplete="off" />
+          <p class="hint">
+            Если ключ указан, расширение обращается к OpenRouter напрямую и не использует наш сервер.
+            Ключ хранится только в этом браузере и никуда, кроме OpenRouter, не отправляется.
+          </p>
+        </div>
+        <div class="field">
+          <label for="model">Модель</label>
+          <input type="text" id="model" list="model-list" placeholder="nvidia/nemotron-3-super-120b-a12b:free" />
+          <datalist id="model-list">
+            <option value="nvidia/nemotron-3-super-120b-a12b:free"></option>
+            <option value="nvidia/nemotron-3-super-120b-a12b"></option>
+            <option value="google/gemma-4-31b-it:free"></option>
+          </datalist>
+          <p class="hint">ID модели с openrouter.ai/models. Пусто — модели по умолчанию.</p>
+        </div>
+      </section>
+
+      <section class="glass card">
+        <h2>Сервер</h2>
+        <div class="field">
+          <label for="backendUrl">Адрес нашего сервера</label>
+          <input type="text" id="backendUrl" placeholder="https://skipper-flow-api.bellka.workers.dev" />
+          <p class="hint">Используется, когда свой ключ не указан, и для отзывов «Это не реклама».</p>
+        </div>
+      </section>
+
+      <section class="glass card">
+        <h2>Режим стримера</h2>
+        <div class="field">
+          <label for="customWords">Свои слова для заглушения</label>
+          <textarea id="customWords" rows="3" placeholder="например: васян, васяна, слово*"></textarea>
+          <p class="hint">
+            Через запятую или с новой строки. Звёздочка в конце — любое окончание: «васян*» заглушит
+            «васян», «васяна», «васяну». Осторожно с короткими основами: «ник*» заглушит и «никто», и «никогда».
+            Только отдельные слова, не фразы. Работает вместе со встроенным словарём (английский, русский, украинский).
+          </p>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="btn primary" id="save">Сохранить</button>
+        <button class="btn" id="clear-key">Удалить ключ</button>
+        <button class="btn" id="clear-cache">Очистить кэш анализа</button>
+        <span id="saved"></span>
+      </div>
+
+      <!-- Указание авторства обязательно по лицензии данных SponsorBlock (CC BY-NC-SA 4.0) -->
+      <p class="credits">
+        Разметка сегментов частично берётся из
+        <a href="https://sponsor.ajay.app/" target="_blank" rel="noopener">SponsorBlock</a>
+        (лицензия
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>).
+      </p>
+    </main>
+
+    <script src="../common/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

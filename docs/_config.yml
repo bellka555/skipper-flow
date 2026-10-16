@@ -1,0 +1,5 @@
+# Настройки GitHub Pages: страницы из этой папки (docs) публикуются как сайт.
+# Markdown-файлы (index.md, privacy.md) GitHub сам превращает в HTML-страницы.
+title: Skipper Flow
+lang: ru
+theme: jekyll-theme-primer

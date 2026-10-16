@@ -1,0 +1,44 @@
+// Настройки Cloudflare Workers для сервера Skipper Flow.
+// Документация: https://developers.cloudflare.com/workers/wrangler/configuration/
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // Имя Worker. Адрес будет https://skipper-flow-api.<ваш-поддомен>.workers.dev
+  "name": "skipper-flow-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  // nodejs_compat: даёт process.env и другие привычные части Node.js (их использует src/ai.js)
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Адрес https://skipper-flow-api.bellka.workers.dev — включён явно.
+  // Отдельные «preview»-адреса для каждой версии нам не нужны.
+  "workers_dev": true,
+  "preview_urls": false,
+
+  // База D1. database_id выдаёт команда:  npm.cmd run db:create
+  // (если база уже есть, id можно посмотреть командой:  npx.cmd wrangler d1 list)
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "skipper-flow",
+      "database_id": "9db563a6-2ed3-4ca2-a61b-951d107dfd99"
+    }
+  ],
+
+  // Обычные (не секретные) настройки. Ключ OpenRouter сюда НЕ кладём — это секрет:
+  //   в интернете:  npm.cmd run secret:key
+  //   локально:     файл .dev.vars (см. .dev.vars.example)
+  "vars": {
+    // Модели в порядке приоритета: бесплатная Nemotron 3 Super, запасная — её платная версия
+    "AI_MODELS": "nvidia/nemotron-3-super-120b-a12b:free,nvidia/nemotron-3-super-120b-a12b",
+    "AI_TIMEOUT_MS": "180000",
+    "AI_MAX_TOKENS": "6000",
+    "AI_REASONING_EFFORT": "low",
+    "RATE_LIMIT_PER_MINUTE": "20",
+    // Сколько раз в сутки можно звать ИИ на всех пользователей (ответы из кэша не считаются)
+    "DAILY_AI_LIMIT": "800"
+  },
+
+  // Логи запросов в панели Cloudflare (Workers → skipper-flow-api → Logs)
+  "observability": { "enabled": true }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "skipper-flow-backend",
+  "version": "0.1.0",
+  "description": "Сервер расширения Skipper Flow на Cloudflare Workers: анализ субтитров YouTube через OpenRouter",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "logs": "wrangler tail",
+    "login": "wrangler login",
+    "db:create": "wrangler d1 create skipper-flow",
+    "db:init:local": "wrangler d1 execute skipper-flow --local --file=schema.sql",
+    "db:init": "wrangler d1 execute skipper-flow --remote --file=schema.sql",
+    "secret:key": "wrangler secret put OPENROUTER_API_KEY"
+  },
+  "private": true,
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

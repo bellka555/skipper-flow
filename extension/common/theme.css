@@ -1,0 +1,267 @@
+/* ОБЩИЙ СТИЛЬ «СТЕКЛО НА КАМНЕ» (тема «Графит») для popup и страницы настроек.
+   Как устроено:
+   1. Фон страницы (body) — почти чёрный цвет + несколько размытых светлых «пятен» (radial-gradient).
+   2. Там же, в фоне, — текстура камня: шум, нарисованный SVG-фильтром feTurbulence (картинка не нужна).
+   3. Карточки (.glass) полупрозрачные: пятна и текстура просвечивают сквозь них, как сквозь матовое стекло.
+   Все цвета — в переменных (--что-то) ниже: чтобы поменять оформление, достаточно поменять их. */
+
+/* ---------- Цвета ---------- */
+
+:root {
+  --bg: #09090a;
+  --glow-1: rgba(255, 255, 255, 0.13);
+  --glow-2: rgba(150, 150, 160, 0.12);
+  --glow-3: rgba(255, 255, 255, 0.06);
+  --text: #f4f4f5;
+  --muted: rgba(244, 244, 245, 0.5);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-strong: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --highlight: rgba(255, 255, 255, 0.2);
+  --accent: #ffffff;
+  --switch-off: rgba(255, 255, 255, 0.1);
+  --switch-on: linear-gradient(135deg, #e9e9ea, #ffffff);
+  --knob: #ffffff;
+  --knob-on: #111113; /* включённый переключатель белый, поэтому «шарик» тёмный */
+  --shadow: rgba(0, 0, 0, 0.55);
+
+  /* Цвета типов сегментов (как полоски на шкале плеера) */
+  --c-sponsor: #34d27b;
+  --c-selfpromo: #f5c542;
+  --c-interaction: #b46bff;
+}
+
+/* ---------- Фон: светлые пятна + текстура камня ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background-color: var(--bg);
+  /* Слои фона рисуются сверху вниз:
+     1–2) текстура камня: мелкое «зерно» и крупные «разводы». Прозрачность шума задана прямо
+          в SVG (последняя строка feColorMatrix), поэтому отдельный слой со смешиванием не нужен.
+     3–5) три размытых пятна создают лёгкий градиент. */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0.06 -0.01'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.03' numOctaves='4' seed='7'/><feColorMatrix values='0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0.035 -0.01'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),
+    radial-gradient(circle at 12% 8%, var(--glow-1), transparent 45%),
+    radial-gradient(circle at 95% 40%, var(--glow-2), transparent 42%),
+    radial-gradient(circle at 30% 100%, var(--glow-3), transparent 50%);
+  font: 14px/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Стекло ---------- */
+/* Без backdrop-filter: в popup под карточками только неподвижный фон, размывать там нечего,
+   а «живое» размытие в окне расширения давало артефакты — светлые полоски на краях карточек. */
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  /* сверху тонкий блик, снизу мягкая тень */
+  box-shadow:
+    inset 0 1px 0 var(--highlight),
+    0 10px 30px -12px var(--shadow);
+}
+
+h2 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Переключатель в стиле iOS ---------- */
+/* Настоящий checkbox прозрачный и лежит поверх — клики и клавиатура работают как обычно. */
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 42px;
+  height: 26px;
+}
+
+.switch input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--switch-off);
+  border: 1px solid var(--glass-border);
+  transition: background 0.25s;
+}
+
+.slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--knob);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  /* лёгкая «пружинка» при переключении */
+  transition: transform 0.3s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.switch input:checked + .slider {
+  background: var(--switch-on);
+  border-color: transparent;
+}
+
+.switch input:checked + .slider::after {
+  transform: translateX(16px);
+  background: var(--knob-on);
+}
+
+.switch input:focus-visible + .slider {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.switch.big {
+  width: 52px;
+  height: 31px;
+}
+.switch.big .slider::after {
+  width: 25px;
+  height: 25px;
+}
+.switch.big input:checked + .slider::after {
+  transform: translateX(21px);
+}
+
+/* ---------- Кнопки ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 11px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass-strong);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  background: var(--highlight);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn.icon {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 11px;
+}
+
+
+/* ---------- Подсветка рамки: «волна» и ровный свет ---------- */
+/* Два вида подсветки, которые включаются классом у карточки:
+     .wave — по краю рамки бежит светлый блик (как маленькая волна);
+     .lit  — рамка ровно светится, без движения.
+   Какой карточке какой вид — решает сама страница (см. popup.html). Без класса подсветки нет.
+
+   Как устроено:
+   1. Поверх рамки карточки кладём слой ::before ровно её размера.
+   2. Маска (mask) оставляет от слоя только полоску по краю — то есть саму рамку.
+   3. Для .lit фон полоски — просто полупрозрачный белый.
+   4. Для .wave фон — conic-gradient: «круговой» градиент из центра карточки, почти весь прозрачный,
+      и только узкий сектор белый. Анимация поворачивает его (--wave-angle от 0 до 360 градусов),
+      и блик бежит по кругу. @property нужен, чтобы браузер умел плавно анимировать угол. */
+
+@property --wave-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes wave-run {
+  to {
+    --wave-angle: 360deg;
+  }
+}
+
+.glass {
+  position: relative;
+}
+
+.wave::before,
+.lit::before {
+  content: '';
+  position: absolute;
+  inset: -1px; /* поверх рамки (у .glass рамка 1px), линия чуть заходит внутрь */
+  padding: 1.5px; /* толщина светящейся линии */
+  border-radius: inherit;
+  pointer-events: none;
+  /* Две маски: вся площадь минус внутренняя часть (content-box) = остаётся только край */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Ровная подсветка: белый с прозрачностью, чуть ярче обычной рамки */
+.lit::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Бегущая волна */
+.wave::before {
+  background: conic-gradient(
+    from var(--wave-angle),
+    transparent 0deg,
+    transparent 240deg,
+    rgba(255, 255, 255, 0.7) 320deg,
+    transparent 360deg
+  );
+  animation: wave-run 11s linear infinite;
+}
+
+/* Если в системе включено «уменьшить движение» — вместо волны ровная подсветка */
+@media (prefers-reduced-motion: reduce) {
+  .wave::before {
+    animation: none;
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Атрибут hidden должен прятать элемент всегда — даже если у него задан display (как у .btn) */
+[hidden] {
+  display: none !important;
+}
