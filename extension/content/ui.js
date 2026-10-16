@@ -17,17 +17,20 @@ const TYPE_COLORS = {
 // Типы «сегментов», которые на самом деле — запрещённые слова режима стримера
 const WORD_TYPES = ['slurs', 'profanity', 'custom'];
 
-// «Найти главное» — белые метки на шкале
-TYPE_COLORS.highlight = '#ffffff';
-
+// Названия типов — на языке браузера (тексты в _locales, функция t — в common/i18n.js)
 const TYPE_NAMES = {
-  sponsor: 'Реклама',
-  selfpromo: 'Самореклама',
-  interaction: 'Просьба подписаться',
-  slurs: 'Оскорбление',
-  profanity: 'Мат',
-  custom: 'Своё слово',
+  sponsor: t('nameSponsor'),
+  selfpromo: t('nameSelfpromo'),
+  interaction: t('nameInteraction'),
+  slurs: t('nameSlurs'),
+  profanity: t('nameProfanity'),
+  custom: t('nameCustom'),
 };
+
+// «Найти главное» — белые метки на шкале.
+// Добавляем ПОСЛЕ объявления TYPE_NAMES: обратиться к const до его объявления нельзя (файл упадёт).
+TYPE_COLORS.highlight = '#ffffff';
+TYPE_NAMES.highlight = t('nameHighlight');
 
 // --- Полоски на шкале прогресса ---
 
@@ -119,9 +122,7 @@ function renderPlayerButton(enabled, onToggle) {
   if (button.parentElement !== group) group.prepend(button); // в начало группы
 
   button.classList.toggle('ais-off', !enabled);
-  button.title = enabled
-    ? 'Skipper Flow: пропуск рекламы включён (нажмите, чтобы выключить)'
-    : 'Skipper Flow: пропуск рекламы выключен (нажмите, чтобы включить)';
+  button.title = enabled ? t('playerButtonOn') : t('playerButtonOff');
 }
 
 // --- Уведомление (toast) ---

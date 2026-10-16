@@ -159,16 +159,16 @@ async function startForVideo(videoId) {
   settings = await loadSettings();
 
   // В Shorts работает только режим стримера: рекламных вставок в коротких роликах почти не бывает.
-  if (isShortsPage()) setStatus('unavailable', 'В Shorts работает только режим стримера');
+  if (isShortsPage()) setStatus('unavailable', t('statusShortsOnly'));
   else if (settings.enabled) runAdDetection(videoId);
-  else setStatus('off', 'Пропуск рекламы выключен');
+  else setStatus('off', t('masterOff'));
 
   if (settings.streamer.enabled) runWordFilter(videoId);
 }
 
 async function runAdDetection(videoId) {
   // Шаг 1: SponsorBlock. Если там уже есть разметка от людей — ИИ не нужен.
-  setStatus('loading', 'Ищу разметку в SponsorBlock…');
+  setStatus('loading', t('statusSponsorBlock'));
   const sponsorBlock = await sendToBackground({ type: 'sponsorblock', videoId: videoId });
   if (state.videoId !== videoId) return; // пока ждали ответ, пользователь ушёл на другое видео
 
@@ -178,18 +178,18 @@ async function runAdDetection(videoId) {
   }
 
   // Шаг 2: ждём субтитры.
-  setStatus('loading', 'Жду субтитры…');
+  setStatus('loading', t('statusWaitingSubs'));
   const transcript = await getTranscript(videoId);
   if (state.videoId !== videoId) return;
 
   if (!transcript) {
-    setStatus('unavailable', 'Для этого видео анализ недоступен');
-    showToast('Skipper Flow: для этого видео анализ недоступен', [], 4000);
+    setStatus('unavailable', t('statusUnavailable'));
+    showToast(t('toastUnavailable'), [], 4000);
     return;
   }
 
   // Шаг 3: отправляем расшифровку на анализ ИИ.
-  setStatus('loading', 'ИИ анализирует субтитры…');
+  setStatus('loading', t('statusAnalyzing'));
   const result = await sendToBackground({
     type: 'analyze',
     videoId: videoId,
@@ -199,7 +199,7 @@ async function runAdDetection(videoId) {
   if (state.videoId !== videoId) return;
 
   if (result.error) {
-    setStatus('error', 'Ошибка анализа: ' + result.error);
+    setStatus('error', t('statusAnalysisError', result.error));
     return;
   }
   applySegments(result.segments, result.source, result.model);
@@ -208,14 +208,14 @@ async function runAdDetection(videoId) {
 // Режим стримера: ждём субтитры и ищем в них запрещённые слова.
 async function runWordFilter(videoId) {
   state.wordStatus = 'loading';
-  state.wordMessage = 'Жду субтитры…';
+  state.wordMessage = t('statusWaitingSubs');
 
   const transcript = await getTranscript(videoId);
   if (state.videoId !== videoId) return;
 
   if (!transcript || transcript.words.length === 0) {
     state.wordStatus = 'unavailable';
-    state.wordMessage = 'Нет субтитров — проверить слова нельзя';
+    state.wordMessage = t('wordsNoSubs');
     return;
   }
   updateWordRanges();
@@ -230,7 +230,7 @@ function updateWordRanges() {
   setStreamerRanges(ranges, video);
   state.wordRanges = ranges;
   state.wordStatus = 'ready';
-  state.wordMessage = ranges.length > 0 ? 'Будет заглушено мест: ' + ranges.length : 'Запрещённых слов не найдено';
+  state.wordMessage = ranges.length > 0 ? t('wordsFound', ranges.length) : t('wordsNone');
 
   attachToVideo();
   redrawBar();
@@ -240,17 +240,17 @@ function updateWordRanges() {
 async function runHighlights(videoId) {
   if (state.highlightsStatus === 'loading') return; // уже ищем — второй раз не запускаем
   state.highlightsStatus = 'loading';
-  state.highlightsMessage = 'Жду субтитры…';
+  state.highlightsMessage = t('statusWaitingSubs');
 
   const transcript = await getTranscript(videoId);
   if (state.videoId !== videoId) return;
   if (!transcript) {
     state.highlightsStatus = 'unavailable';
-    state.highlightsMessage = 'Нет субтитров — найти главное нельзя';
+    state.highlightsMessage = t('highlightsNoSubs');
     return;
   }
 
-  state.highlightsMessage = 'ИИ ищет главное…';
+  state.highlightsMessage = t('highlightsSearching');
   const result = await sendToBackground({
     type: 'highlights',
     videoId: videoId,
@@ -261,12 +261,12 @@ async function runHighlights(videoId) {
 
   if (result.error) {
     state.highlightsStatus = 'error';
-    state.highlightsMessage = 'Ошибка: ' + result.error;
+    state.highlightsMessage = t('errorPrefix', result.error);
     return;
   }
   state.highlights = result.moments || [];
   state.highlightsStatus = 'ready';
-  state.highlightsMessage = state.highlights.length > 0 ? '' : 'Ключевых моментов не нашлось';
+  state.highlightsMessage = state.highlights.length > 0 ? '' : t('highlightsNone');
   redrawBar();
 }
 
@@ -352,7 +352,7 @@ function sleep(ms) {
 async function sendToBackground(message) {
   try {
     const response = await chrome.runtime.sendMessage(message);
-    return response || { error: 'Пустой ответ от background' };
+    return response || { error: t('emptyBackgroundResponse') };
   } catch (error) {
     return { error: error.message };
   }
@@ -369,7 +369,7 @@ function applySegments(segments, source, model) {
   state.model = model;
 
   const count = state.segments.length;
-  setStatus('ready', count > 0 ? 'Найдено сегментов: ' + count : 'Рекламы не найдено');
+  setStatus('ready', count > 0 ? t('segmentsFound', count) : t('noAdsFound'));
 
   attachToVideo();
   redrawBar();
@@ -427,13 +427,13 @@ function onTimeUpdate() {
 
 function showSkippedToast(segment) {
   // Коротко: «Пропущено» + цветная точка типа (название типа — в подсказке при наведении)
-  showToast('Пропущено', [
+  showToast(t('toastSkipped'), [
     {
-      label: 'Посмотреть рекламу',
+      label: t('watchAd'),
       onClick: () => watchSegment(segment),
     },
     {
-      label: 'Это не реклама',
+      label: t('notAnAd'),
       onClick: () => markNotAd(segment),
     },
   ], 6000, segment.type);

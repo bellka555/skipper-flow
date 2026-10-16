@@ -2,21 +2,64 @@
 
 Всё, что нужно скопировать в панель разработчика (https://chrome.google.com/webstore/devconsole).
 
+Расширение двуязычное (`extension/_locales/en` и `ru`), язык по умолчанию — английский. Поэтому в магазине:
+- **название и краткое описание** подставятся сами из `_locales` для каждого языка;
+- **подробное описание и скриншоты** заполняются отдельно для каждого языка: на вкладке «Store listing» есть выбор языка — сначала English (язык по умолчанию), потом добавить Русский.
+
 ---
 
-## 1. Вкладка «Store listing» (описание в магазине)
+## 1. Вкладка «Store listing» — English (по умолчанию)
 
-**Название** (берётся из manifest.json):
-Skipper Flow — пропуск рекламы в YouTube
+**Name / Short description** — из `_locales/en/messages.json`:
+- Skipper Flow — skip YouTube sponsors
+- Skips sponsor segments in YouTube videos, bleeps profanity and slurs for streamers, and finds video highlights.
 
-**Краткое описание** (берётся из manifest.json, до 132 символов):
-Пропускает рекламные вставки в видео YouTube, запикивает мат и оскорбления для стримеров, показывает главное в видео.
+**Category:** Tools (или Entertainment).
 
-**Категория:** Инструменты (Tools) — или «Развлечения» (Entertainment).
+**Description:**
 
-**Язык:** Русский.
+```
+Skipper Flow makes watching YouTube cleaner: it skips creators' sponsor segments, mutes forbidden words and helps you quickly find what matters in a video.
 
-**Подробное описание** (поле Description):
+⏭ SKIP CREATORS' ADS
+• Automatically skips sponsored segments, self-promotion (merch, Patreon, courses) and "subscribe" reminders.
+• First it uses ready-made markup from the open SponsorBlock database. If there is none, an AI finds the segments from the video's subtitles — great for smaller and non-English channels that SponsorBlock rarely covers.
+• Colored marks on the video timeline, plus "Watch the ad" and "Not an ad" buttons.
+• Each type can be turned off separately.
+
+🎙 STREAMER MODE
+• Bleeps or mutes slurs and profanity in videos — for example, when you react to videos live.
+• Warns you a few seconds before a forbidden word.
+• Dictionaries for English, Russian and Ukrainian + your own words.
+• Works in YouTube Shorts too.
+• Audio is muted right in the tab, so your streaming software (OBS) captures the already-muted sound.
+
+📌 VIDEO HIGHLIGHTS
+• The author's chapters — instantly and for free.
+• "Find highlights" button: the AI picks 3–6 key moments you can jump to in one click.
+
+🧼 CLEAN MODE
+• Everything works, but there are no colored marks on the video timeline.
+
+GOOD TO KNOW
+• The extension works from video subtitles. If a video has no subtitles, AI analysis and streamer mode are unavailable.
+• Subtitles are sometimes wrong, so streamer mode helps but is not a 100% guarantee.
+• The extension does not block YouTube's own ads and is not affiliated with YouTube or Google.
+
+Ad segment data is partly provided by SponsorBlock (sponsor.ajay.app) under the CC BY-NC-SA 4.0 license.
+```
+
+**Images:** `store/images/en/` — `promo-440x280.png` и три `screenshot-*.png` (1280×800).
+
+---
+
+## 2. Вкладка «Store listing» — Русский
+
+**Название / краткое описание** — из `_locales/ru/messages.json`:
+- Skipper Flow — пропуск рекламы в YouTube
+- Пропускает рекламные вставки в видео YouTube, запикивает мат и оскорбления для стримеров, показывает главное в видео.
+
+**Подробное описание:**
 
 ```
 Skipper Flow делает просмотр YouTube чище: пропускает рекламные вставки авторов, глушит запрещённые слова и помогает быстро найти главное в видео.
@@ -49,32 +92,34 @@ Skipper Flow делает просмотр YouTube чище: пропускае�
 Данные о рекламных сегментах частично предоставлены SponsorBlock (sponsor.ajay.app) по лицензии CC BY-NC-SA 4.0.
 ```
 
+**Картинки:** `store/images/ru/` — `promo-440x280.png` и три `screenshot-*.png`.
+
 ---
 
-## 2. Вкладка «Privacy practices» (конфиденциальность)
+## 3. Вкладка «Privacy practices» (одна на все языки — заполняем по-английски)
 
-**Single purpose (единственное назначение):**
+**Single purpose:**
 
 ```
-Улучшение просмотра видео на YouTube: расширение по субтитрам видео находит и пропускает рекламные вставки авторов, глушит запрещённые слова и показывает ключевые моменты видео.
+Improving the YouTube viewing experience: using video subtitles, the extension finds and skips creators' sponsor segments, mutes forbidden words and shows the key moments of a video.
 ```
 
-**Обоснование разрешений** (Permission justification):
+**Permission justification:**
 
-| Разрешение | Текст обоснования |
+| Permission | Justification |
 |---|---|
-| `storage` | Хранит настройки пользователя (включённые функции, свои слова, необязательный ключ OpenRouter) и кэш результатов анализа на устройстве. |
-| Доступ к `https://www.youtube.com/*` (content scripts) | Расширение работает только на YouTube: читает субтитры текущего видео, перематывает рекламные вставки, глушит запрещённые слова и рисует метки на шкале видео. |
-| `https://sponsor.ajay.app/*` | Запрос готовой разметки рекламных сегментов из открытой базы SponsorBlock. Отправляется только 4 символа хэша ID видео, не сам ID. |
-| `https://openrouter.ai/*` | Только если пользователь сам указал свой ключ OpenRouter: субтитры видео отправляются напрямую модели ИИ для поиска рекламы и ключевых моментов. |
-| `https://skipper-flow-api.bellka.workers.dev/*` | Наш сервер: анализ субтитров ИИ и кэш результатов для пользователей без своего ключа; отзывы «Это не реклама». |
+| `storage` | Stores the user's settings (enabled features, custom words, an optional OpenRouter key) and a cache of analysis results on the device. |
+| Host access to `https://www.youtube.com/*` (content scripts) | The extension works only on YouTube: it reads the current video's subtitles, skips sponsor segments, mutes forbidden words and draws marks on the video timeline. |
+| `https://sponsor.ajay.app/*` | Fetches ready-made sponsor segment markup from the open SponsorBlock database. Only a 4-character prefix of a hash of the video ID is sent, not the ID itself. |
+| `https://openrouter.ai/*` | Only if the user has entered their own OpenRouter key: the video's subtitles are sent directly to an AI model to find ads and key moments. |
+| `https://skipper-flow-api.bellka.workers.dev/*` | Our own server: AI analysis of subtitles and a results cache for users without their own key; "Not an ad" feedback. |
 
-**Remote code (удалённый код):** «No, I am not using remote code». Весь код лежит внутри расширения; с серверов приходят только данные (JSON), не код.
+**Remote code:** «No, I am not using remote code». Весь код лежит внутри расширения; с серверов приходят только данные (JSON), не код.
 
-**Data usage (какие данные собираются)** — отметить:
+**Data usage** — отметить:
 
-- ☑ **Website content (содержимое сайтов)** — текст субтитров видео отправляется на наш сервер (или в OpenRouter со своим ключом) для анализа ИИ.
-- ☑ **Web history (история просмотров)** — ID видео, которое анализирует ИИ, отправляется на наш сервер, чтобы найти результат в кэше.
+- ☑ **Website content** — текст субтитров видео отправляется на наш сервер (или в OpenRouter со своим ключом) для анализа ИИ.
+- ☑ **Web history** — ID видео, которое анализирует ИИ, отправляется на наш сервер, чтобы найти результат в кэше.
 - ☐ Personally identifiable information — нет.
 - ☐ Health, Financial, Location, Personal communications, User activity — нет.
 - ☐ Authentication information — **не отмечаем**: ключ OpenRouter хранится только на устройстве и отправляется только в сам OpenRouter по желанию пользователя, мы его не получаем.
@@ -86,21 +131,21 @@ Skipper Flow делает просмотр YouTube чище: пропускае�
 
 **Контактная почта издателя** (Account → Contact email, будет видна в магазине): skipperflow.help@gmail.com
 
-**Privacy policy URL:** https://bellka555.github.io/skipper-flow/privacy.html (файл `docs/privacy.md`, публикуется через GitHub Pages).
+**Privacy policy URL:** https://bellka555.github.io/skipper-flow/privacy.html (страница на английском и русском, файл `docs/privacy.md`, публикуется через GitHub Pages).
 
 ---
 
-## 3. Картинки
+## 4. Картинки
 
 | Что | Файл | Размер |
 |---|---|---|
-| Иконка | `extension/icons/icon128.png` | 128×128 (рисунок 96×96 + поля 16 px) |
-| Маленькая промо-картинка | `store/images/promo-440x280.png` | 440×280 |
-| Скриншоты (1–5) | `store/images/screenshot-*.png` | 1280×800 |
+| Иконка (одна на все языки) | `extension/icons/icon128.png` | 128×128 (рисунок 96×96 + поля 16 px) |
+| Маленькая промо-картинка | `store/images/en/promo-440x280.png`, `store/images/ru/promo-440x280.png` | 440×280 |
+| Скриншоты (1–5) | `store/images/en/screenshot-*.png`, `store/images/ru/screenshot-*.png` | 1280×800 |
 
 ---
 
-## 4. Перед отправкой
+## 5. Перед отправкой
 
 - [x] Сервер в интернете (https://skipper-flow-api.bellka.workers.dev), адрес вписан в `extension/common/settings.js` и `manifest.json`
 - [x] Из `host_permissions` убраны `http://localhost/*` и `http://127.0.0.1/*`

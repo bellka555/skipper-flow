@@ -1,5 +1,8 @@
 // Страница настроек: свой ключ OpenRouter, модель и адрес backend.
 
+// Сначала переводим тексты в разметке (data-i18n) на язык браузера
+translatePage();
+
 const apiKeyInput = document.getElementById('apiKey');
 const modelInput = document.getElementById('model');
 const backendUrlInput = document.getElementById('backendUrl');
@@ -29,13 +32,13 @@ document.getElementById('save').addEventListener('click', async () => {
     // убираем «/» в конце, чтобы не получилось http://localhost:8787//analyze
     backendUrl: backendUrlInput.value.trim().replace(/\/+$/, '') || DEFAULT_SETTINGS.backendUrl,
   });
-  showMessage('Сохранено');
+  showMessage(t('saved'));
 });
 
 document.getElementById('clear-key').addEventListener('click', async () => {
   apiKeyInput.value = '';
   await saveSettings({ apiKey: '' });
-  showMessage('Ключ удалён');
+  showMessage(t('keyDeleted'));
 });
 
 // Удаляем из chrome.storage.local кэш режима «свой ключ»: cache_<videoId> (реклама)
@@ -44,7 +47,7 @@ document.getElementById('clear-cache').addEventListener('click', async () => {
   const everything = await chrome.storage.local.get(null);
   const cacheKeys = Object.keys(everything).filter((key) => key.startsWith('cache_') || key.startsWith('highlights_'));
   await chrome.storage.local.remove(cacheKeys);
-  showMessage('Кэш очищен: ' + cacheKeys.length);
+  showMessage(t('cacheCleared', cacheKeys.length));
 });
 
 init();

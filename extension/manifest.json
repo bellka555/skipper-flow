@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Skipper Flow — пропуск рекламы в YouTube",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Пропускает рекламные вставки в видео YouTube, запикивает мат и оскорбления для стримеров, показывает главное в видео.",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "permissions": [
     "storage"
   ],
@@ -31,6 +32,7 @@
       ],
       "js": [
         "common/settings.js",
+        "common/i18n.js",
         "content/badwords.js",
         "content/transcript.js",
         "content/ui.js",

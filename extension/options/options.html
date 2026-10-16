@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Skipper Flow — настройки</title>
+    <title data-i18n="optionsTitle">Skipper Flow</title>
     <link rel="stylesheet" href="../common/theme.css" />
     <style>
       body {
@@ -102,70 +102,64 @@
   </head>
   <body>
     <main class="page">
-      <h1>Настройки</h1>
-      <p class="lead">Skipper Flow — пропуск рекламы в YouTube</p>
+      <h1 data-i18n="optionsHeading"></h1>
+      <p class="lead" data-i18n="optionsLead"></p>
 
       <section class="glass card">
-        <h2>Свой ключ OpenRouter</h2>
+        <h2 data-i18n="ownKeyTitle"></h2>
         <div class="field">
-          <label for="apiKey">API-ключ (необязательно)</label>
+          <label for="apiKey" data-i18n="apiKeyLabel"></label>
           <input type="password" id="apiKey" placeholder="sk-or-v1-…" autocomplete="off" />
-          <p class="hint">
-            Если ключ указан, расширение обращается к OpenRouter напрямую и не использует наш сервер.
-            Ключ хранится только в этом браузере и никуда, кроме OpenRouter, не отправляется.
-          </p>
+          <p class="hint" data-i18n="apiKeyHint"></p>
         </div>
         <div class="field">
-          <label for="model">Модель</label>
+          <label for="model" data-i18n="modelLabel"></label>
           <input type="text" id="model" list="model-list" placeholder="nvidia/nemotron-3-super-120b-a12b:free" />
           <datalist id="model-list">
             <option value="nvidia/nemotron-3-super-120b-a12b:free"></option>
             <option value="nvidia/nemotron-3-super-120b-a12b"></option>
             <option value="google/gemma-4-31b-it:free"></option>
           </datalist>
-          <p class="hint">ID модели с openrouter.ai/models. Пусто — модели по умолчанию.</p>
+          <p class="hint" data-i18n="modelHint"></p>
         </div>
       </section>
 
       <section class="glass card">
-        <h2>Сервер</h2>
+        <h2 data-i18n="serverTitle"></h2>
         <div class="field">
-          <label for="backendUrl">Адрес нашего сервера</label>
+          <label for="backendUrl" data-i18n="backendLabel"></label>
           <input type="text" id="backendUrl" placeholder="https://skipper-flow-api.bellka.workers.dev" />
-          <p class="hint">Используется, когда свой ключ не указан, и для отзывов «Это не реклама».</p>
+          <p class="hint" data-i18n="backendHint"></p>
         </div>
       </section>
 
       <section class="glass card">
-        <h2>Режим стримера</h2>
+        <h2 data-i18n="streamerMode"></h2>
         <div class="field">
-          <label for="customWords">Свои слова для заглушения</label>
-          <textarea id="customWords" rows="3" placeholder="например: васян, васяна, слово*"></textarea>
-          <p class="hint">
-            Через запятую или с новой строки. Звёздочка в конце — любое окончание: «васян*» заглушит
-            «васян», «васяна», «васяну». Осторожно с короткими основами: «ник*» заглушит и «никто», и «никогда».
-            Только отдельные слова, не фразы. Работает вместе со встроенным словарём (английский, русский, украинский).
-          </p>
+          <label for="customWords" data-i18n="customWordsLabel"></label>
+          <textarea id="customWords" rows="3" data-i18n-placeholder="customWordsPlaceholder"></textarea>
+          <p class="hint" data-i18n="customWordsHint"></p>
         </div>
       </section>
 
       <div class="actions">
-        <button class="btn primary" id="save">Сохранить</button>
-        <button class="btn" id="clear-key">Удалить ключ</button>
-        <button class="btn" id="clear-cache">Очистить кэш анализа</button>
+        <button class="btn primary" id="save" data-i18n="save"></button>
+        <button class="btn" id="clear-key" data-i18n="clearKey"></button>
+        <button class="btn" id="clear-cache" data-i18n="clearCache"></button>
         <span id="saved"></span>
       </div>
 
       <!-- Указание авторства обязательно по лицензии данных SponsorBlock (CC BY-NC-SA 4.0) -->
       <p class="credits">
-        Разметка сегментов частично берётся из
+        <span data-i18n="creditsBefore"></span>
         <a href="https://sponsor.ajay.app/" target="_blank" rel="noopener">SponsorBlock</a>
-        (лицензия
+        (<span data-i18n="creditsLicense"></span>
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>).
       </p>
     </main>
 
     <script src="../common/settings.js"></script>
+    <script src="../common/i18n.js"></script>
     <script src="options.js"></script>
   </body>
 </html>

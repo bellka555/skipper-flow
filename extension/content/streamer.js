@@ -100,7 +100,7 @@ function checkStreamerWords(video, streamerSettings) {
 
 // group — 'slurs' | 'profanity' | 'custom': от неё зависит цвет точки (TYPE_COLORS в ui.js)
 function showWordWarning(seconds, group) {
-  const toast = showToast('Запрещённое слово через ' + seconds + ' с', [], 2500, group);
+  const toast = showToast(t('wordWarning', seconds), [], 2500, group);
   // Предупреждение должно быть заметным — без полупрозрачности (см. .ais-toast-warning в content.css)
   if (toast) {
     toast.classList.add('ais-toast-warning');

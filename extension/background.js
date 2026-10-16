@@ -7,7 +7,7 @@
 // Почему не из content script: у background есть host_permissions из manifest.json,
 // поэтому ему не мешает CORS, а ключ пользователя никогда не попадает на страницу YouTube.
 
-importScripts('common/settings.js', 'common/prompt.js');
+importScripts('common/settings.js', 'common/i18n.js', 'common/prompt.js');
 
 const SPONSORBLOCK_API = 'https://sponsor.ajay.app/api/skipSegments/';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -32,7 +32,7 @@ async function handleMessage(message) {
   if (message.type === 'analyze') return keepAliveWhile(runAiTask(AD_TASK, message));
   if (message.type === 'highlights') return keepAliveWhile(runAiTask(HIGHLIGHTS_TASK, message));
   if (message.type === 'feedback') return sendFeedback(message);
-  return { error: 'Неизвестный тип сообщения: ' + message.type };
+  return { error: 'unknown message type: ' + message.type };
 }
 
 // Chrome усыпляет service worker примерно через 30 секунд «тишины».
@@ -141,7 +141,7 @@ async function runViaBackend(task, videoId, transcript, language, backendUrl) {
       body: JSON.stringify({ videoId, transcript, language }),
     });
   } catch (error) {
-    throw new Error('сервер ' + backendUrl + ' недоступен. Запущен ли backend?');
+    throw new Error(t('errServerUnavailable', backendUrl));
   }
 
   const data = await response.json().catch(() => ({}));
@@ -166,11 +166,11 @@ async function runDirect(task, videoId, transcript, language, settings) {
       await chrome.storage.local.set({ [cacheKey]: { model, [task.resultKey]: result } });
       return { source: 'ai', model, [task.resultKey]: result };
     } catch (error) {
-      console.warn('[Skipper Flow] модель', model, 'ошибка:', error.message);
+      console.warn('[Skipper Flow] model', model, 'error:', error.message);
       errors.push(model + ': ' + error.message);
     }
   }
-  throw new Error('все модели вернули ошибку (' + errors.join('; ') + ')');
+  throw new Error(t('errAllModelsFailed', errors.join('; ')));
 }
 
 async function callOpenRouter(task, model, transcript, language, apiKey) {
@@ -205,19 +205,19 @@ async function callOpenRouter(task, model, transcript, language, apiKey) {
   }
 
   const data = await response.json();
-  if (data.error) throw new Error(data.error.message || 'ошибка OpenRouter');
+  if (data.error) throw new Error(data.error.message || 'OpenRouter error');
 
-  console.log('[Skipper Flow]', model, (Date.now() - startedAt) + ' мс', data.usage);
+  console.log('[Skipper Flow]', model, (Date.now() - startedAt) + ' ms', data.usage);
 
   const content = data.choices && data.choices[0] && data.choices[0].message.content;
-  if (!content) throw new Error('пустой ответ модели');
+  if (!content) throw new Error('empty model response');
   return task.clean(extractJson(content));
 }
 
 // Простая проверка ответа модели (в backend то же самое делает библиотека zod).
 // Невалидные сегменты выбрасываем, а если нет даже массива segments — это ошибка.
 function cleanSegments(raw) {
-  if (!raw || !Array.isArray(raw.segments)) throw new Error('в ответе нет массива segments');
+  if (!raw || !Array.isArray(raw.segments)) throw new Error('no segments array in the response');
 
   const result = [];
   for (const item of raw.segments) {
@@ -237,7 +237,7 @@ function cleanSegments(raw) {
 
 // То же для «главного»: момент = { start, title }. Не больше 6, по порядку времени.
 function cleanMoments(raw) {
-  if (!raw || !Array.isArray(raw.moments)) throw new Error('в ответе нет массива moments');
+  if (!raw || !Array.isArray(raw.moments)) throw new Error('no moments array in the response');
 
   const result = [];
   for (const item of raw.moments) {

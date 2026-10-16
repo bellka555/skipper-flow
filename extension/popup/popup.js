@@ -2,10 +2,14 @@
 // Popup живёт, только пока открыт. Состояние видео он берёт у content script вкладки,
 // а настройки читает и пишет в chrome.storage.local.
 
+// Сначала переводим тексты в разметке (data-i18n) на язык браузера
+translatePage();
+
+// Короткие названия типов для списка сегментов (тексты — в _locales)
 const TYPE_NAMES = {
-  sponsor: 'Реклама',
-  selfpromo: 'Самореклама',
-  interaction: 'Подписка / лайк',
+  sponsor: t('segSponsor'),
+  selfpromo: t('segSelfpromo'),
+  interaction: t('segInteraction'),
 };
 
 const TYPE_COLORS = {
@@ -75,7 +79,7 @@ async function initSettings() {
 }
 
 function renderEnabled(enabled) {
-  masterLabel.textContent = enabled ? 'Пропуск рекламы включён' : 'Пропуск рекламы выключен';
+  masterLabel.textContent = enabled ? t('masterOn') : t('masterOff');
   document.body.classList.toggle('is-off', !enabled);
   // Когда пропуск выключен, переключатели типов блокируем (disabled): их значения сохраняются
   // и снова заработают, когда пропуск включат.
@@ -123,7 +127,7 @@ async function refreshStatus() {
   renderHighlights(status);
 
   if (!status || !status.videoId) {
-    renderStatusText('Откройте видео на YouTube', 'muted');
+    renderStatusText(t('openYoutube'), 'muted');
     renderSource(null, null);
     segmentsList.innerHTML = '';
     return;
@@ -147,7 +151,7 @@ function renderSource(source, model) {
     return;
   }
 
-  let text = source === 'sponsorblock' ? 'SponsorBlock' : source === 'cache' ? 'Кэш' : 'ИИ';
+  let text = source === 'sponsorblock' ? 'SponsorBlock' : source === 'cache' ? t('sourceCache') : t('sourceAi');
   if (model) text += ' · ' + shortModelName(model);
 
   sourceElement.textContent = text;
@@ -191,18 +195,18 @@ function renderSegments(segments) {
     actions.className = 'segment-actions';
 
     // «▶» — перемотать на начало рекламы и досмотреть её один раз.
-    const watch = createButton('▶', 'Посмотреть этот фрагмент один раз', { type: 'watch', index: index });
+    const watch = createButton('▶', t('watchOnceTitle'), { type: 'watch', index: index });
     watch.classList.add('icon');
     actions.appendChild(watch);
 
     // У обычного сегмента — «Не реклама», у отмеченного — «Пропускать» (отмена отметки).
     if (segment.ignored) {
       actions.appendChild(
-        createButton('Пропускать', 'Снова считать рекламой и пропускать', { type: 'undoNotAd', index: index })
+        createButton(t('skipAgain'), t('skipAgainTitle'), { type: 'undoNotAd', index: index })
       );
     } else {
       actions.appendChild(
-        createButton('Не реклама', 'Больше не пропускать и отправить отзыв', { type: 'notAd', index: index })
+        createButton(t('notAdShort'), t('notAdTitle'), { type: 'notAd', index: index })
       );
     }
 
@@ -238,7 +242,7 @@ function renderHighlights(status) {
   // Кнопку прячем, когда моменты уже найдены; пока ищем — она неактивна
   findHighlightsButton.hidden = hasMoments;
   findHighlightsButton.disabled = isLoading;
-  findHighlightsButton.textContent = isLoading ? 'Ищу…' : 'Найти главное';
+  findHighlightsButton.textContent = isLoading ? t('searching') : t('findHighlights');
 
   highlightsStatus.textContent = info.message;
   highlightsStatus.className = 'status ' + (isLoading ? 'loading' : 'muted');
@@ -248,7 +252,7 @@ function renderHighlights(status) {
   // Главы: null — данные ещё не пришли, пустой список — у видео нет глав
   const chapters = status.chapters ? status.chapters.chapters : [];
   chaptersHead.hidden = chapters.length === 0;
-  chaptersHead.textContent = status.chapters && status.chapters.kind === 'auto' ? 'Главы (созданы YouTube)' : 'Главы от автора';
+  chaptersHead.textContent = status.chapters && status.chapters.kind === 'auto' ? t('chaptersAuto') : t('chaptersAuthor');
   renderMomentList(chaptersList, chapters);
 }
 
@@ -260,7 +264,7 @@ function renderMomentList(list, moments) {
     const item = document.createElement('li');
     item.className = 'segment highlight-row';
     item.style.setProperty('--c', '#ffffff');
-    item.title = 'Перейти к этому моменту';
+    item.title = t('goToMoment');
 
     const color = document.createElement('span');
     color.className = 'segment-color';

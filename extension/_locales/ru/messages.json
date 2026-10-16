@@ -1,0 +1,284 @@
+{
+  "extName": {
+    "message": "Skipper Flow — пропуск рекламы в YouTube"
+  },
+  "extDescription": {
+    "message": "Пропускает рекламные вставки в видео YouTube, запикивает мат и оскорбления для стримеров, показывает главное в видео."
+  },
+  "masterAria": {
+    "message": "Пропуск рекламы"
+  },
+  "masterOn": {
+    "message": "Пропуск рекламы включён"
+  },
+  "masterOff": {
+    "message": "Пропуск рекламы выключен"
+  },
+  "whatToSkip": {
+    "message": "Что пропускать"
+  },
+  "typeSponsor": {
+    "message": "Реклама спонсоров"
+  },
+  "typeSelfpromo": {
+    "message": "Самореклама"
+  },
+  "typeInteraction": {
+    "message": "Просьбы подписаться"
+  },
+  "streamerMode": {
+    "message": "Режим стримера"
+  },
+  "slurs": {
+    "message": "Оскорбления"
+  },
+  "slursNote": {
+    "message": "(да-да, это то, что нужно вам, особенно стримерам)"
+  },
+  "profanity": {
+    "message": "Мат"
+  },
+  "beep": {
+    "message": "«Бип» вместо тишины"
+  },
+  "warnAhead": {
+    "message": "Предупреждать заранее"
+  },
+  "warnAheadNote": {
+    "message": "(работает для двух функций: мат и оскорбления)"
+  },
+  "streamerHint": {
+    "message": "Работает по субтитрам — помогает, но не даёт 100% гарантии."
+  },
+  "currentVideo": {
+    "message": "Текущее видео"
+  },
+  "loading": {
+    "message": "Загрузка…"
+  },
+  "openYoutube": {
+    "message": "Откройте видео на YouTube"
+  },
+  "sourceCache": {
+    "message": "Кэш"
+  },
+  "sourceAi": {
+    "message": "ИИ"
+  },
+  "segSponsor": {
+    "message": "Реклама"
+  },
+  "segSelfpromo": {
+    "message": "Самореклама"
+  },
+  "segInteraction": {
+    "message": "Подписка / лайк"
+  },
+  "watchOnceTitle": {
+    "message": "Посмотреть этот фрагмент один раз"
+  },
+  "skipAgain": {
+    "message": "Пропускать"
+  },
+  "skipAgainTitle": {
+    "message": "Снова считать рекламой и пропускать"
+  },
+  "notAdShort": {
+    "message": "Не реклама"
+  },
+  "notAdTitle": {
+    "message": "Больше не пропускать и отправить отзыв"
+  },
+  "highlightsTitle": {
+    "message": "Главное в видео"
+  },
+  "findHighlights": {
+    "message": "Найти главное"
+  },
+  "searching": {
+    "message": "Ищу…"
+  },
+  "aiHighlightsHead": {
+    "message": "Главное по версии ИИ"
+  },
+  "chaptersAuthor": {
+    "message": "Главы от автора"
+  },
+  "chaptersAuto": {
+    "message": "Главы (созданы YouTube)"
+  },
+  "goToMoment": {
+    "message": "Перейти к этому моменту"
+  },
+  "cleanMode": {
+    "message": "Чистый режим"
+  },
+  "cleanModeNote": {
+    "message": "(всё работает, но на шкале видео нет цветных меток)"
+  },
+  "settingsLink": {
+    "message": "Настройки"
+  },
+  "statusShortsOnly": {
+    "message": "В Shorts работает только режим стримера"
+  },
+  "statusSponsorBlock": {
+    "message": "Ищу разметку в SponsorBlock…"
+  },
+  "statusWaitingSubs": {
+    "message": "Жду субтитры…"
+  },
+  "statusUnavailable": {
+    "message": "Для этого видео анализ недоступен"
+  },
+  "toastUnavailable": {
+    "message": "Skipper Flow: для этого видео анализ недоступен"
+  },
+  "statusAnalyzing": {
+    "message": "ИИ анализирует субтитры…"
+  },
+  "statusAnalysisError": {
+    "message": "Ошибка анализа: $1"
+  },
+  "segmentsFound": {
+    "message": "Найдено сегментов: $1"
+  },
+  "noAdsFound": {
+    "message": "Рекламы не найдено"
+  },
+  "wordsNoSubs": {
+    "message": "Нет субтитров — проверить слова нельзя"
+  },
+  "wordsFound": {
+    "message": "Будет заглушено мест: $1"
+  },
+  "wordsNone": {
+    "message": "Запрещённых слов не найдено"
+  },
+  "highlightsNoSubs": {
+    "message": "Нет субтитров — найти главное нельзя"
+  },
+  "highlightsSearching": {
+    "message": "ИИ ищет главное…"
+  },
+  "highlightsNone": {
+    "message": "Ключевых моментов не нашлось"
+  },
+  "errorPrefix": {
+    "message": "Ошибка: $1"
+  },
+  "emptyBackgroundResponse": {
+    "message": "Пустой ответ от фоновой части расширения"
+  },
+  "toastSkipped": {
+    "message": "Пропущено"
+  },
+  "watchAd": {
+    "message": "Посмотреть рекламу"
+  },
+  "notAnAd": {
+    "message": "Это не реклама"
+  },
+  "wordWarning": {
+    "message": "Запрещённое слово через $1 с"
+  },
+  "nameSponsor": {
+    "message": "Реклама"
+  },
+  "nameSelfpromo": {
+    "message": "Самореклама"
+  },
+  "nameInteraction": {
+    "message": "Просьба подписаться"
+  },
+  "nameSlurs": {
+    "message": "Оскорбление"
+  },
+  "nameProfanity": {
+    "message": "Мат"
+  },
+  "nameCustom": {
+    "message": "Своё слово"
+  },
+  "nameHighlight": {
+    "message": "Главное"
+  },
+  "playerButtonOn": {
+    "message": "Skipper Flow: пропуск рекламы включён (нажмите, чтобы выключить)"
+  },
+  "playerButtonOff": {
+    "message": "Skipper Flow: пропуск рекламы выключен (нажмите, чтобы включить)"
+  },
+  "errServerUnavailable": {
+    "message": "сервер $1 недоступен"
+  },
+  "errAllModelsFailed": {
+    "message": "все модели вернули ошибку ($1)"
+  },
+  "optionsTitle": {
+    "message": "Skipper Flow — настройки"
+  },
+  "optionsHeading": {
+    "message": "Настройки"
+  },
+  "optionsLead": {
+    "message": "Skipper Flow — пропуск рекламы в YouTube"
+  },
+  "ownKeyTitle": {
+    "message": "Свой ключ OpenRouter"
+  },
+  "apiKeyLabel": {
+    "message": "API-ключ (необязательно)"
+  },
+  "apiKeyHint": {
+    "message": "Если ключ указан, расширение обращается к OpenRouter напрямую и не использует наш сервер. Ключ хранится только в этом браузере и никуда, кроме OpenRouter, не отправляется."
+  },
+  "modelLabel": {
+    "message": "Модель"
+  },
+  "modelHint": {
+    "message": "ID модели с openrouter.ai/models. Пусто — модели по умолчанию."
+  },
+  "serverTitle": {
+    "message": "Сервер"
+  },
+  "backendLabel": {
+    "message": "Адрес нашего сервера"
+  },
+  "backendHint": {
+    "message": "Используется, когда свой ключ не указан, и для отзывов «Это не реклама»."
+  },
+  "customWordsLabel": {
+    "message": "Свои слова для заглушения"
+  },
+  "customWordsPlaceholder": {
+    "message": "например: васян, васяна, слово*"
+  },
+  "customWordsHint": {
+    "message": "Через запятую или с новой строки. Звёздочка в конце — любое окончание: «васян*» заглушит «васян», «васяна», «васяну». Осторожно с короткими основами: «ник*» заглушит и «никто», и «никогда». Только отдельные слова, не фразы. Работает вместе со встроенным словарём (английский, русский, украинский)."
+  },
+  "save": {
+    "message": "Сохранить"
+  },
+  "clearKey": {
+    "message": "Удалить ключ"
+  },
+  "clearCache": {
+    "message": "Очистить кэш анализа"
+  },
+  "saved": {
+    "message": "Сохранено"
+  },
+  "keyDeleted": {
+    "message": "Ключ удалён"
+  },
+  "cacheCleared": {
+    "message": "Кэш очищен: $1"
+  },
+  "creditsBefore": {
+    "message": "Разметка сегментов частично берётся из"
+  },
+  "creditsLicense": {
+    "message": "лицензия"
+  }
+}

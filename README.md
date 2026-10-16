@@ -1,100 +1,104 @@
 # Skipper Flow
 
-**Расширение для Chrome, которое делает просмотр YouTube чище:** пропускает рекламные вставки авторов, запикивает мат и оскорбления для стримеров и показывает главное в видео. Там, где нет готовой разметки, рекламу находит ИИ по субтитрам.
+**English** · [Русский](README.ru.md)
 
-![Пропуск рекламы авторов](store/images/screenshot-1-ads.png)
+**A Chrome extension that makes watching YouTube cleaner:** it skips creators' sponsor segments, bleeps profanity and slurs for streamers, and finds the highlights of a video. Where no ready-made markup exists, an AI finds the ads by reading the subtitles.
 
-## Возможности
+![Skipping creators' ads](store/images/en/screenshot-1-ads.png)
 
-### ⏭ Пропуск рекламы авторов
-- Перематывает спонсорскую рекламу, самопиар (мерч, Boosty, курсы) и просьбы подписаться.
-- Сначала берёт разметку из открытой базы [SponsorBlock](https://sponsor.ajay.app/). Если её нет — фрагменты находит ИИ по субтитрам видео. Это закрывает русскоязычные и небольшие каналы, которые SponsorBlock размечает редко.
-- Цветные метки на шкале видео, уведомление с кнопками «Посмотреть рекламу» и «Это не реклама» (отзыв уходит на сервер).
+## Features
 
-### 🎙 Режим стримера
-- Запикивает или глушит оскорбления и мат — например, когда стример реагирует на чужие видео в эфире.
-- Предупреждает за несколько секунд до запрещённого слова.
-- Словари на русском, украинском и английском, учёт приставок (`а-хуительно`, `за-ебал`) и свои слова.
-- Работает и в YouTube Shorts. Звук глушится прямо во вкладке, поэтому OBS захватывает уже заглушённый звук.
+### ⏭ Skipping creators' ads
+- Skips sponsored segments, self-promotion (merch, Patreon, courses) and "subscribe" reminders.
+- First it checks the open [SponsorBlock](https://sponsor.ajay.app/) database. If there's nothing there, an AI finds the segments from the video's subtitles. This covers Russian-speaking and smaller channels that SponsorBlock rarely marks up.
+- Colored marks on the video timeline, plus a notification with "Watch the ad" and "Not an ad" buttons (feedback goes to the server).
 
-![Режим стримера](store/images/screenshot-2-streamer.png)
+### 🎙 Streamer mode
+- Bleeps or mutes slurs and profanity — for example, when a streamer reacts to other people's videos live.
+- Warns a few seconds before a forbidden word.
+- Dictionaries for English, Russian and Ukrainian, prefix-aware matching for Slavic profanity, plus your own words.
+- Works in YouTube Shorts too. Audio is muted right in the tab, so OBS captures the already-muted sound.
 
-### 📌 Главное в видео
-- Главы от автора — сразу, без ИИ.
-- Кнопка «Найти главное»: ИИ выделяет 3–6 ключевых моментов, к ним можно перейти в один клик.
+![Streamer mode](store/images/en/screenshot-2-streamer.png)
 
-![Главное в видео](store/images/screenshot-3-highlights.png)
+### 📌 Video highlights
+- The author's chapters — instantly, no AI needed.
+- A "Find highlights" button: the AI picks 3–6 key moments you can jump to in one click.
 
-## Как это устроено
+![Video highlights](store/images/en/screenshot-3-highlights.png)
+
+The interface is available in English and Russian (chosen automatically by the browser language).
+
+## How it works
 
 ```
-YouTube-плеер ──запрос субтитров──▶ interceptor.js (мир страницы)
-                                        │ postMessage
-                                        ▼
-                                   content.js ──▶ пропуск рекламы, режим стримера, метки на шкале
-                                        │ chrome.runtime.sendMessage
-                                        ▼
-                                  background.js (service worker)
-                         ┌──────────────┼───────────────────────┐
-                         ▼              ▼                       ▼
-                    SponsorBlock   сервер Skipper Flow     OpenRouter
-                                   (Cloudflare Workers)    (со своим ключом)
-                                        │
-                                        ▼
-                                  OpenRouter (ИИ) + кэш в D1
+YouTube player ──subtitles request──▶ interceptor.js (page world)
+                                          │ postMessage
+                                          ▼
+                                     content.js ──▶ ad skipping, streamer mode, timeline marks
+                                          │ chrome.runtime.sendMessage
+                                          ▼
+                                    background.js (service worker)
+                          ┌───────────────┼────────────────────────┐
+                          ▼               ▼                        ▼
+                     SponsorBlock   Skipper Flow server       OpenRouter
+                                    (Cloudflare Workers)      (with your own key)
+                                          │
+                                          ▼
+                                   OpenRouter (AI) + D1 cache
 ```
 
-Интересные места в коде:
-- **Перехват субтитров.** YouTube не отдаёт субтитры по прямой ссылке (нужен токен плеера), поэтому скрипт в мире страницы подменяет `XMLHttpRequest` / `fetch` и «подслушивает» ответ, который получает сам плеер ([interceptor.js](extension/content/interceptor.js)).
-- **Главы видео** берутся из данных, которые YouTube получает с сервера при переходе между видео (запрос `/youtubei/v1/get_watch`), а не со страницы — так не бывает глав от предыдущего видео.
-- **Заглушение слов** через Web Audio (`GainNode`), а не `video.muted`, — плеер YouTube не может «перебить» заглушение при перемотке ([streamer.js](extension/content/streamer.js)).
-- **ИИ с запасной моделью:** модели перебираются по очереди при ошибке, таймауте или невалидном JSON; ответ проверяется через zod; лимит `max_tokens` обрывает «зацикливание» думающей модели ([ai.js](backend/src/ai.js)).
-- **Сервер без простоя и без затрат:** Cloudflare Workers + D1, кэш результатов на всех пользователей, лимиты запросов с IP и дневной лимит вызовов ИИ ([index.js](backend/src/index.js)).
+Interesting bits of the code:
+- **Intercepting subtitles.** YouTube won't serve subtitles from a direct URL (it needs a player token), so a script in the page world wraps `XMLHttpRequest` / `fetch` and "listens in" on the response the player itself receives ([interceptor.js](extension/content/interceptor.js)).
+- **Video chapters** come from the data YouTube fetches when you switch videos (the `/youtubei/v1/get_watch` request) rather than from the page — so you never see the previous video's chapters.
+- **Muting words** goes through Web Audio (`GainNode`) instead of `video.muted`, so the YouTube player can't "undo" the mute while seeking ([streamer.js](extension/content/streamer.js)).
+- **AI with a fallback model:** models are tried in order on an error, timeout or invalid JSON; the answer is validated with zod; a `max_tokens` limit cuts off a reasoning model that gets stuck in a loop ([ai.js](backend/src/ai.js)).
+- **A server with no downtime and no cost:** Cloudflare Workers + D1, results cached for all users, per-IP rate limits and a daily cap on AI calls ([index.js](backend/src/index.js)).
 
-## Технологии
+## Tech stack
 
-| Часть | Что используется |
+| Part | What's used |
 |---|---|
-| Расширение | Chrome Manifest V3, чистый JavaScript без сборки, content scripts (MAIN и изолированный мир), service worker, `chrome.storage`, Web Audio API |
-| Сервер | Cloudflare Workers, D1 (SQLite), zod, wrangler |
-| ИИ | [OpenRouter](https://openrouter.ai/): NVIDIA Nemotron 3 Super (бесплатная) + платная версия как запасная, structured outputs |
-| Данные | SponsorBlock API (запрос по префиксу SHA-256 хэша ID видео) |
+| Extension | Chrome Manifest V3, plain JavaScript with no build step, content scripts (MAIN and isolated world), service worker, `chrome.storage`, `chrome.i18n`, Web Audio API |
+| Server | Cloudflare Workers, D1 (SQLite), zod, wrangler |
+| AI | [OpenRouter](https://openrouter.ai/): NVIDIA Nemotron 3 Super (free) + its paid version as a fallback, structured outputs |
+| Data | SponsorBlock API (queried by a SHA-256 hash prefix of the video ID) |
 
-## Структура
+## Project structure
 
 ```
-extension/   — расширение Chrome
-backend/     — сервер на Cloudflare Workers + база D1
-store/       — тексты и картинки для Chrome Web Store
-docs/        — сайт на GitHub Pages (политика конфиденциальности)
+extension/   — the Chrome extension (_locales/ holds the English and Russian texts)
+backend/     — the server on Cloudflare Workers + D1 database
+store/       — Chrome Web Store texts and images (en / ru)
+docs/        — GitHub Pages site (privacy policy)
 ```
 
-## Запуск у себя
+## Running it yourself
 
-**Расширение:** `chrome://extensions` → включить «Режим разработчика» → «Загрузить распакованное расширение» → папка `extension`. По умолчанию оно работает с опубликованным сервером. Можно указать свой ключ [OpenRouter](https://openrouter.ai/keys) на странице настроек — тогда запросы к ИИ идут напрямую, без сервера.
+**Extension:** `chrome://extensions` → turn on "Developer mode" → "Load unpacked" → pick the `extension` folder. By default it works with the published server. You can set your own [OpenRouter](https://openrouter.ai/keys) key on the settings page — then AI requests go straight to OpenRouter, without our server.
 
-**Сервер локально** (нужен Node.js 20+):
+**Local server** (needs Node.js 20+):
 
 ```bash
 cd backend
 npm install
-cp .dev.vars.example .dev.vars   # впишите OPENROUTER_API_KEY
+cp .dev.vars.example .dev.vars   # put your OPENROUTER_API_KEY in it
 npm run db:init:local
 npm run dev                      # http://localhost:8787
 ```
 
-Чтобы расширение работало с локальным сервером, временно добавьте `"http://localhost/*"` в `host_permissions` в `extension/manifest.json` и укажите `http://localhost:8787` в настройках расширения.
+To make the extension talk to the local server, temporarily add `"http://localhost/*"` to `host_permissions` in `extension/manifest.json` and set `http://localhost:8787` on the extension's settings page.
 
-**Свой сервер в Cloudflare:** `npm run login` → `npm run db:create` (вписать `database_id` в `wrangler.jsonc`) → `npm run db:init` → `npm run secret:key` → `npm run deploy`.
+**Your own server on Cloudflare:** `npm run login` → `npm run db:create` (put the `database_id` into `wrangler.jsonc`) → `npm run db:init` → `npm run secret:key` → `npm run deploy`.
 
-**Архив для Chrome Web Store:** `powershell -ExecutionPolicy Bypass -File pack-extension.ps1` → `dist/skipper-flow-<версия>.zip`.
+**Chrome Web Store package:** `powershell -ExecutionPolicy Bypass -File pack-extension.ps1` → `dist/skipper-flow-<version>.zip`.
 
-> На Windows в PowerShell пишите `npm.cmd` вместо `npm`.
+> On Windows PowerShell, type `npm.cmd` instead of `npm`.
 
-## Конфиденциальность
+## Privacy
 
-На сервер уходят только ID видео и текст его субтитров — для анализа ИИ. Режим стримера и главы работают полностью в браузере. Подробно — в [политике конфиденциальности](https://bellka555.github.io/skipper-flow/privacy.html).
+Only the video ID and its subtitle text are sent to the server — for the AI analysis. Streamer mode and chapters work entirely in the browser. Details are in the [privacy policy](https://bellka555.github.io/skipper-flow/privacy.html).
 
-## Благодарности
+## Credits
 
-Данные о рекламных сегментах частично предоставлены [SponsorBlock](https://sponsor.ajay.app/) по лицензии [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+Ad segment data is partly provided by [SponsorBlock](https://sponsor.ajay.app/) under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.

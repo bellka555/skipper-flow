@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html>
   <head>
     <meta charset="utf-8" />
     <!-- Общий стиль (темы, стекло, переключатели), потом стили именно popup -->
@@ -18,27 +18,27 @@
           <span class="subtitle" id="master-label"></span>
         </span>
         <span class="switch big">
-          <input type="checkbox" id="enabled" aria-label="Пропуск рекламы" />
+          <input type="checkbox" id="enabled" data-i18n-aria-label="masterAria" />
           <span class="slider"></span>
         </span>
       </label>
 
       <!-- Выключатели по типам -->
       <section class="glass card lit">
-        <h2>Что пропускать</h2>
+        <h2 data-i18n="whatToSkip"></h2>
         <label class="toggle-row">
           <span class="type-dot" style="--c: var(--c-sponsor)"></span>
-          <span class="toggle-label">Реклама спонсоров</span>
+          <span class="toggle-label" data-i18n="typeSponsor"></span>
           <span class="switch"><input type="checkbox" data-type="sponsor" /><span class="slider"></span></span>
         </label>
         <label class="toggle-row">
           <span class="type-dot" style="--c: var(--c-selfpromo)"></span>
-          <span class="toggle-label">Самореклама</span>
+          <span class="toggle-label" data-i18n="typeSelfpromo"></span>
           <span class="switch"><input type="checkbox" data-type="selfpromo" /><span class="slider"></span></span>
         </label>
         <label class="toggle-row">
           <span class="type-dot" style="--c: var(--c-interaction)"></span>
-          <span class="toggle-label">Просьбы подписаться</span>
+          <span class="toggle-label" data-i18n="typeInteraction"></span>
           <span class="switch"><input type="checkbox" data-type="interaction" /><span class="slider"></span></span>
         </label>
       </section>
@@ -47,60 +47,60 @@
            Классы is-on и lit ставит popup.js, когда режим включён. -->
       <section class="glass card streamer standalone" id="streamer-card">
         <div class="card-head">
-          <h2>Режим стримера</h2>
-          <span class="switch"><input type="checkbox" id="streamer-enabled" aria-label="Режим стримера" /><span class="slider"></span></span>
+          <h2 data-i18n="streamerMode"></h2>
+          <span class="switch"><input type="checkbox" id="streamer-enabled" data-i18n-aria-label="streamerMode" /><span class="slider"></span></span>
         </div>
         <div class="streamer-options">
           <label class="toggle-row">
             <span class="type-dot" style="--c: #ff4d4f"></span>
             <span class="toggle-label">
-              Оскорбления
-              <small class="toggle-note">(да-да, это то, что нужно вам, особенно стримерам)</small>
+              <span data-i18n="slurs"></span>
+              <small class="toggle-note" data-i18n="slursNote"></small>
             </span>
             <span class="switch"><input type="checkbox" data-streamer="slurs" /><span class="slider"></span></span>
           </label>
           <label class="toggle-row">
             <span class="type-dot" style="--c: #ff8a4d"></span>
-            <span class="toggle-label">Мат</span>
+            <span class="toggle-label" data-i18n="profanity"></span>
             <span class="switch"><input type="checkbox" data-streamer="profanity" /><span class="slider"></span></span>
           </label>
           <label class="toggle-row">
-            <span class="toggle-label">«Бип» вместо тишины</span>
+            <span class="toggle-label" data-i18n="beep"></span>
             <span class="switch"><input type="checkbox" data-streamer="beep" /><span class="slider"></span></span>
           </label>
           <label class="toggle-row">
             <span class="toggle-label">
-              Предупреждать заранее
-              <small class="toggle-note">(работает для двух функций: мат и оскорбления)</small>
+              <span data-i18n="warnAhead"></span>
+              <small class="toggle-note" data-i18n="warnAheadNote"></small>
             </span>
             <span class="switch"><input type="checkbox" data-streamer="warn" /><span class="slider"></span></span>
           </label>
           <p class="status muted" id="streamer-status"></p>
-          <p class="hint">Работает по субтитрам — помогает, но не даёт 100% гарантии.</p>
+          <p class="hint" data-i18n="streamerHint"></p>
         </div>
       </section>
 
       <!-- Статус текущего видео и список найденных сегментов -->
       <section class="glass card lit">
         <div class="card-head">
-          <h2>Текущее видео</h2>
+          <h2 data-i18n="currentVideo"></h2>
           <span class="badge" id="source" hidden></span>
         </div>
-        <p class="status" id="status">Загрузка…</p>
+        <p class="status" id="status" data-i18n="loading"></p>
         <ul class="segments" id="segments"></ul>
       </section>
 
       <!-- «Найти главное»: по кнопке ИИ находит ключевые моменты видео. Тоже не зависит от пропуска рекламы. -->
       <section class="glass card lit standalone" id="highlights-card" hidden>
         <div class="card-head">
-          <h2>Главное в видео</h2>
-          <button class="btn" id="find-highlights">Найти главное</button>
+          <h2 data-i18n="highlightsTitle"></h2>
+          <button class="btn" id="find-highlights" data-i18n="findHighlights"></button>
         </div>
         <!-- Главы от автора (из таймкодов в описании) — показываем сразу, без ИИ -->
         <p class="subhead" id="chapters-head" hidden></p>
         <ul class="segments chapters-list" id="chapters-list"></ul>
         <!-- Результат кнопки «Найти главное» -->
-        <p class="subhead" id="ai-head" hidden>Главное по версии ИИ</p>
+        <p class="subhead" id="ai-head" data-i18n="aiHighlightsHead" hidden></p>
         <p class="status muted" id="highlights-status"></p>
         <ul class="segments" id="highlights-list"></ul>
       </section>
@@ -109,20 +109,21 @@
       <section class="glass card lit standalone">
         <label class="toggle-row">
           <span class="toggle-label">
-            Чистый режим
-            <small class="toggle-note">(всё работает, но на шкале видео нет цветных меток)</small>
+            <span data-i18n="cleanMode"></span>
+            <small class="toggle-note" data-i18n="cleanModeNote"></small>
           </span>
           <span class="switch"><input type="checkbox" id="clean-mode" /><span class="slider"></span></span>
         </label>
       </section>
 
       <footer class="footer">
-        <a href="#" id="open-options">Настройки</a>
+        <a href="#" id="open-options" data-i18n="settingsLink"></a>
       </footer>
     </main>
 
-    <!-- Сначала общий файл с настройками, потом код popup -->
+    <!-- Сначала общие файлы (настройки и переводы), потом код popup -->
     <script src="../common/settings.js"></script>
+    <script src="../common/i18n.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
