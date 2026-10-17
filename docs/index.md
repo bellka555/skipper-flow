@@ -6,7 +6,7 @@ A Chrome extension that makes watching YouTube cleaner:
 - **streamer mode** — bleeps profanity and slurs (in Shorts too) and warns in advance;
 - **video highlights** — the author's chapters and key moments found by AI.
 
-[Privacy policy](privacy.html) · [GitHub](https://github.com/bellka555/skipper-flow)
+[Chrome Web Store](https://chromewebstore.google.com/detail/bpbfccelbghmcigkhbpjeaeppkkmahek) · [Privacy policy](privacy.html) · [GitHub](https://github.com/bellka555/skipper-flow)
 
 ---
 
@@ -16,4 +16,4 @@ A Chrome extension that makes watching YouTube cleaner:
 - **режим стримера** — запикивает мат и оскорбления (и в Shorts), предупреждает заранее;
 - **главное в видео** — главы от автора и ключевые моменты от ИИ.
 
-[Политика конфиденциальности](privacy.html#russian)
+[Chrome Web Store](https://chromewebstore.google.com/detail/bpbfccelbghmcigkhbpjeaeppkkmahek) · [Политика конфиденциальности](privacy.html#russian)

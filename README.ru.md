@@ -4,6 +4,8 @@
 
 **Расширение для Chrome, которое делает просмотр YouTube чище:** пропускает рекламные вставки авторов, запикивает мат и оскорбления для стримеров и показывает главное в видео. Там, где нет готовой разметки, рекламу находит ИИ по субтитрам.
 
+**[⬇ Установить из Chrome Web Store](https://chromewebstore.google.com/detail/bpbfccelbghmcigkhbpjeaeppkkmahek)**
+
 ![Пропуск рекламы авторов](store/images/ru/screenshot-1-ads.png)
 
 ## Возможности

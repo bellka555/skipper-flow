@@ -4,6 +4,8 @@
 
 **A Chrome extension that makes watching YouTube cleaner:** it skips creators' sponsor segments, bleeps profanity and slurs for streamers, and finds the highlights of a video. Where no ready-made markup exists, an AI finds the ads by reading the subtitles.
 
+**[⬇ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/bpbfccelbghmcigkhbpjeaeppkkmahek)**
+
 ![Skipping creators' ads](store/images/en/screenshot-1-ads.png)
 
 ## Features
