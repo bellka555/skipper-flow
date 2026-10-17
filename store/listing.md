@@ -185,6 +185,7 @@ Improving the YouTube viewing experience: using video subtitles, the extension f
 | Иконка (одна на все языки) | `extension/icons/icon128.png` | 128×128 (рисунок 96×96 + поля 16 px) |
 | Маленькая промо-картинка | `store/images/{en,ru,uk}/promo-440x280.png` | 440×280 |
 | Скриншоты (1–5) | `store/images/{en,ru,uk}/screenshot-*.png` | 1280×800 |
+| Большой баннер (Marquee, необязательно) | `store/images/{en,ru,uk}/marquee-1400x560.png` | 1400×560 |
 
 ---
 
